@@ -1,7 +1,17 @@
-import { player } from "../entities/Player.js";
-import { gravity } from "./gravity.js";
+class GlobalUpdate {
+    constructor() {
+        this._objectsToUpdate = [];
+    }
 
-export function update() {
-    gravity.update();
-    player.update();
+    addEntity(entity) {
+        this._objectsToUpdate.push(entity);
+    }
+
+    update() {
+        for (let obj of this._objectsToUpdate) {
+            obj.update();
+        }
+    }
 }
+
+export const globalUpdate = new GlobalUpdate();

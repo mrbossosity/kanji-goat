@@ -1,23 +1,24 @@
 import { player } from "../entities/Player.js";
+import { globalJump } from "./global-jump.js";
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
-        player.moveLeft = true;
+        player.movingLeft = true;
     } else if (e.key === "ArrowRight") {
-        player.moveRight = true;
+        player.movingRight = true;
     }
 });
 
 document.addEventListener("keyup", (e) => {
     if (e.key === "ArrowLeft") {
-        player.moveLeft = false;
+        player.movingLeft = false;
     } else if (e.key === "ArrowRight") {
-        player.moveRight = false;
+        player.movingRight = false;
     }
 });
 
 document.addEventListener("keydown", (e) => {
     if (e.key === " ") {
-        player.jump();
+        globalJump.jump(384, 20);
     }
 });

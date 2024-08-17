@@ -16,4 +16,4 @@ class Sky {
     }
 }
 
-export const background = new Sky(0, 0);
+export const backgroundSky = new Sky(0, 0);

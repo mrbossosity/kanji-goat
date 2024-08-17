@@ -1,10 +1,12 @@
 import { canvas, ctx } from "./index.js";
-import { player } from "../entities/Player.js";
-import { background } from "../entities/Sky.js";
+
+export var objectsToRender = [];
 
 export default function render() {
+    // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // Sky first, then clouds, then cliff, then player, etc.
-    background.render();
-    player.render();
+    for (let obj of objectsToRender) {
+        obj.render();
+    }
 }
