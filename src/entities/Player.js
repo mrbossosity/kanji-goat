@@ -14,7 +14,9 @@ altSprite.src = "/src/assets/images/goat-alt-128.png";
 class Player {
     constructor(x, y, width, height, speedX, speedY, jumpSpeed) {
         this._x = x;
+        this._initX = x;
         this._y = y;
+        this._initY = y;
         this._width = width;
         this._height = height;
         this._speedX = speedX;
@@ -29,7 +31,6 @@ class Player {
         this._bottom = this._y + this._height;
 
         // Collision status
-        // this._onGround = true;
         this._movingLeft;
         this._movingRight;
         this._isJumping = false;
@@ -37,9 +38,6 @@ class Player {
         this._isOnGround = false;
         this._glued = false;
         this._gluedObj;
-        // this._touchingLeftWall = false;
-        // this._touchingRightWall = false;
-        // this._touchingBottomWall = false;
 
         this._frame = 0; // for alternating sprites
 
@@ -186,14 +184,6 @@ class Player {
         this._movingRight = value;
     }
 
-    // get movingUp() {
-    //     return this._movingUp;
-    // }
-
-    // get movingDown() {
-    //     return this._movingDown;
-    // }
-
     jump() {
         // console.log("jump");
         this._glued = false;
@@ -224,11 +214,18 @@ class Player {
     }
 
     reset() {
-        this._x = initX;
-        this._y = initY;
-        this._speedY = 0;
+        this._x = this._initX;
+        this._y = this._initY;
+
         this._movingLeft = false;
         this._movingRight = false;
+
+        this._speedY = 0;
+        this._isJumping = false;
+        this._isFreeFalling = false;
+        this._isOnGround = false;
+        this._glued = false;
+        this._gluedObj = null;
     }
 
     update() {
