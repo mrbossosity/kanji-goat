@@ -1,4 +1,4 @@
-import render from "./render.js";
+import { globalRender } from "./render.js";
 import { globalUpdate } from "./update.js";
 
 const fps = 60;
@@ -12,7 +12,7 @@ export default function gameLoop(timestamp) {
     if (timeElapsed >= interval) {
         lastTime = timestamp;
         globalUpdate.update();
-        render();
+        globalRender.render();
     }
 
     // Get next frame

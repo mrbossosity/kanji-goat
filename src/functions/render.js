@@ -1,12 +1,20 @@
 import { canvas, ctx } from "./index.js";
 
-export var objectsToRender = [];
+class GlobalRender {
+    constructor() {
+        this._objectsToRender = [];
+    }
 
-export default function render() {
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Sky first, then clouds, then cliff, then player, etc.
-    for (let obj of objectsToRender) {
-        obj.render();
+    addEntity(entity) {
+        this._objectsToRender.push(entity);
+    }
+
+    render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let obj of this._objectsToRender) {
+            obj.render();
+        }
     }
 }
+
+export const globalRender = new GlobalRender();
