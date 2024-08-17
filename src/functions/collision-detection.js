@@ -21,18 +21,25 @@ class CollisionDetector {
 
     checkPlayerCollisions() {
         for (let obj of this._objectsToCollide) {
-            if (this._player.isJumping) continue;
-            if (this._player.bottom >= obj.top && this._player.top < obj.top) {
-                if (
-                    this._player.left <= obj.right &&
-                    this._player.right >= obj.left
-                ) {
-                    this._player.land(obj.top);
-                    break;
-                } else {
-                    this._player.isOnGround = false;
-                }
+            // Do not detect if player is still accelerating upwards
+            if (this._player.isJumping) {
+                this._player.fall();
+                continue;
             }
+            if (this._player.bottom < obj.top || this._player.top > obj.top) {
+                this._player.fall();
+                continue;
+            }
+
+            if (
+                this._player.left <= obj.right &&
+                this._player.right >= obj.left
+            ) {
+                this._player.land(obj);
+                break;
+            }
+
+            this._player.fall();
         }
     }
 

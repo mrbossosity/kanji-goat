@@ -19,6 +19,6 @@ document.addEventListener("keyup", (e) => {
 
 document.addEventListener("keydown", (e) => {
     if (e.key === " ") {
-        globalJump.jump(384, 20);
+        globalJump.jump(384, 40);
     }
 });

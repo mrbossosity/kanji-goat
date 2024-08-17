@@ -24,6 +24,7 @@ export class CliffPlatform {
         this._jumpDistance;
         this._jumpFrameCount;
         this._jumpFrame = 0;
+        this._delta = 0;
 
         // Hitbox markers
         this._left = this._x;
@@ -98,6 +99,10 @@ export class CliffPlatform {
         return this._bottom;
     }
 
+    get delta() {
+        return this._delta;
+    }
+
     jump(jumpDistance, jumpFrameCount) {
         this._isJumping = true;
         this._jumpDistance = jumpDistance;
@@ -111,16 +116,15 @@ export class CliffPlatform {
         }
 
         if (this._isJumping) {
-            let delta = parseFloat(this._jumpDistance / this._jumpFrameCount);
-            this._y += delta;
+            this._delta = this._jumpDistance / this._jumpFrameCount;
+            this._y += this._delta;
 
-            if (this._y + delta >= 512) {
+            if (this._y + this._delta >= 512) {
                 let randomX = Math.floor(
                     Math.random() * (512 - this._width + 1)
                 );
                 this._x = randomX;
-                this._y = this._top - this._gap * 2 + delta;
-                console.log(this._y);
+                this._y = this._top - this._gap * 2 + this._delta;
             }
 
             this._jumpFrame++;

@@ -23,14 +23,9 @@ class Gravity {
 
     update() {
         for (let entity of this._floatingEntities) {
-            if (!entity.isOnGround)
-                // if (entity.movingUp || entity.movingDown) {
-                // console.log("update gravity");
-                entity.speedY -= this._force;
-            // }
-            // else entity.speedY = 0;
+            if (!entity.isOnGround) entity.speedY -= this._force;
         }
     }
 }
 
-export const gravity = new Gravity(2);
+export const gravity = new Gravity(1.5);

@@ -34,7 +34,9 @@ class Player {
         this._movingRight;
         this._isJumping = false;
         this._isFreeFalling = false;
-        this._isOnGround = false; // New flag to track whether the player is on the ground
+        this._isOnGround = false;
+        this._glued = false;
+        this._gluedObj;
         // this._touchingLeftWall = false;
         // this._touchingRightWall = false;
         // this._touchingBottomWall = false;
@@ -71,22 +73,17 @@ class Player {
 
     _updateMovementY() {
         this._y -= this._speedY;
+
+        if (this._glued) {
+            this._y = this._gluedObj.y - this._height + this._gluedObj.delta;
+            return;
+        }
+
         if (this.speedY < 0) {
             this._isOnGround = false;
             this._isFreeFalling = true;
             this._isJumping = false;
         }
-
-        // if (this._speedY > 0) {
-        //     this._movingUp = true;
-        //     this._movingDown = false;
-        // } else if (this._speedY < 0) {
-        //     this._movingUp = false;
-        //     this._movingDown = true;
-        // } else {
-        //     this._movingUp = false;
-        //     this._movingDown = false;
-        // }
     }
 
     _checkLose() {
@@ -198,7 +195,8 @@ class Player {
     // }
 
     jump() {
-        console.log("jump");
+        // console.log("jump");
+        this._glued = false;
         if (!this._isJumping && !this._isFreeFalling) {
             this._speedY = this._jumpSpeed;
             this._isJumping = true;
@@ -207,23 +205,23 @@ class Player {
         this._updateMovementY();
     }
 
-    land(y) {
-        console.log("landing");
+    fall() {
+        this._isOnGround = false;
+        this._glued = false;
+        this._gluedObj = null;
+    }
 
+    land(obj) {
+        // console.log("landing");
         this._speedY = 0;
         this._isFreeFalling = false;
         this._isJumping = false;
         this._isOnGround = true;
+        this._glued = true;
+        this._gluedObj = obj;
 
-        this._y = y - this._height;
-        // this_._y = y - this._height;
-        // this._movingDown = false;
-        // this._movingUp = false;
+        this._y = obj.y - this._height;
     }
-
-    // freefall() {
-    //     this._onGround = false;
-    // }
 
     reset() {
         this._x = initX;
@@ -235,9 +233,9 @@ class Player {
 
     update() {
         this._frame++;
-        this._updateHitbox();
         this._updateMovementX();
         this._updateMovementY();
+        this._updateHitbox();
 
         this._checkLose();
     }
