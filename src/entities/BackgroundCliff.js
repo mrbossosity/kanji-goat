@@ -22,8 +22,14 @@ class BackgroundCliff {
         this._jumpFrameCount;
         this._jumpFrame = 0;
 
-        globalUpdate.addEntity(this);
         globalJump.addEntity(this);
+    }
+
+    reset() {
+        this._isJumping = false;
+        this._jumpDistance;
+        this._jumpFrameCount;
+        this._jumpFrame = 0;
     }
 
     jump(jumpDistance, jumpFrameCount) {
@@ -36,6 +42,7 @@ class BackgroundCliff {
     update() {
         if (this._jumpFrame >= this._jumpFrameCount) {
             this._isJumping = false;
+            globalJump.isJumping = false;
         }
 
         if (this._isJumping) {
@@ -50,6 +57,7 @@ class BackgroundCliff {
                 this._y2 = this._y2 - 512 * 2 + delta;
             }
             this._jumpFrame++;
+            globalJump.isJumping = true;
         }
     }
 

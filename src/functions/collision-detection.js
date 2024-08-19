@@ -4,10 +4,8 @@ export var objectsToCollide = [];
 
 class CollisionDetector {
     constructor() {
-        this._objectsToCollide = [];
         this._player;
-
-        // globalUpdate.addEntity(this);
+        this._objectsToCollide = [];
     }
 
     // Public
@@ -21,25 +19,38 @@ class CollisionDetector {
 
     checkPlayerCollisions() {
         for (let obj of this._objectsToCollide) {
-            // Do not detect if player is still accelerating upwards
+            // Ignore if player is still accelerating upwards
             if (this._player.isJumping) {
                 this._player.fall();
+                obj.collision = false;
                 continue;
             }
+            // Ignore if player is fully above object or below its surface
             if (this._player.bottom < obj.top || this._player.top > obj.top) {
                 this._player.fall();
+                obj.collision = false;
+                continue;
+            }
+            // Ignore if either side of the player is beyond either side of the object
+            if (
+                this._player.left > obj.right ||
+                this._player.right < obj.left
+            ) {
+                this._player.fall();
+                obj.collision = false;
+                continue;
+            }
+            // Final check: ignore if object is not accepting collisions
+            if (!obj.acceptingCollisions) {
+                this._player.fall();
+                obj.collision = false;
                 continue;
             }
 
-            if (
-                this._player.left <= obj.right &&
-                this._player.right >= obj.left
-            ) {
-                this._player.land(obj);
-                break;
-            }
-
-            this._player.fall();
+            // Otherwise, register collision
+            this._player.land(obj);
+            obj.collision = true;
+            break;
         }
     }
 

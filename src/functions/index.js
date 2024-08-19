@@ -18,7 +18,7 @@ export const CANVAS_HEIGHT = canvas.height;
 globalUpdate.addEntity(player);
 globalUpdate.addEntity(cliffGenerator.cliff1);
 globalUpdate.addEntity(cliffGenerator.cliff2);
-globalUpdate.addEntity(cliffGenerator);
+globalUpdate.addEntity(backgroundCliff);
 globalUpdate.addEntity(gravity);
 globalUpdate.addEntity(collisionDetector);
 

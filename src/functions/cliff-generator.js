@@ -1,8 +1,9 @@
 import { CliffPlatform } from "../entities/CliffPlatform.js";
-import { globalUpdate } from "./update.js";
 
 class CliffGenerator {
     constructor(width, height, gap) {
+        this._width = width;
+        this._height = height;
         this._gap = gap;
         this._cliff1 = new CliffPlatform(
             128 + width / 2,
@@ -31,7 +32,10 @@ class CliffGenerator {
         return this._cliff2;
     }
 
-    update() {}
+    reset() {
+        this._cliff1.init(this._width, this._height);
+        this._cliff2.initAlt(this._width, this._height, this._gap);
+    }
 }
 
 export const cliffGenerator = new CliffGenerator(128, 64, 384);

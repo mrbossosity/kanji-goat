@@ -2,7 +2,7 @@ import { collisionDetector } from "../functions/collision-detection.js";
 import { globalJump } from "../functions/global-jump.js";
 import { gravity } from "../functions/gravity.js";
 import { ctx, CANVAS_WIDTH, CANVAS_HEIGHT } from "../functions/index.js";
-import { globalUpdate } from "../functions/update.js";
+import resetGame from "../functions/reset-game.js";
 
 // Load sprite image
 const sprite = new Image();
@@ -87,7 +87,7 @@ class Player {
     _checkLose() {
         if (this._y > CANVAS_HEIGHT) {
             alert("you lose!");
-            this.reset();
+            resetGame();
         }
     }
 
