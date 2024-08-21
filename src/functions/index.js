@@ -1,5 +1,6 @@
 import { backgroundCliff } from "../entities/BackgroundCliff.js";
 import { player } from "../entities/Player.js";
+import { scoreText } from "../entities/ScoreText.js";
 import { backgroundSky } from "../entities/Sky.js";
 import { cliffGenerator } from "./cliff-generator.js";
 import { collisionDetector } from "./collision-detection.js";
@@ -14,19 +15,31 @@ export const ctx = canvas.getContext("2d");
 export const CANVAS_WIDTH = canvas.width;
 export const CANVAS_HEIGHT = canvas.height;
 
-// Set up entities
-globalUpdate.addEntity(player);
-globalUpdate.addEntity(cliffGenerator.cliff1);
-globalUpdate.addEntity(cliffGenerator.cliff2);
-globalUpdate.addEntity(backgroundCliff);
-globalUpdate.addEntity(gravity);
-globalUpdate.addEntity(collisionDetector);
+async function buildGame() {
+    // Set up entities
+    globalUpdate.addEntity(player);
+    globalUpdate.addEntity(cliffGenerator.cliff1);
+    globalUpdate.addEntity(cliffGenerator.cliff2);
+    globalUpdate.addEntity(backgroundCliff);
+    globalUpdate.addEntity(gravity);
+    globalUpdate.addEntity(collisionDetector);
 
-globalRender.addEntity(backgroundSky);
-globalRender.addEntity(backgroundCliff);
-globalRender.addEntity(cliffGenerator.cliff1);
-globalRender.addEntity(cliffGenerator.cliff2);
-globalRender.addEntity(player);
+    globalRender.addEntity(backgroundSky);
+    globalRender.addEntity(backgroundCliff);
+    globalRender.addEntity(cliffGenerator.cliff1);
+    globalRender.addEntity(cliffGenerator.cliff2);
+    globalRender.addEntity(player);
+    globalRender.addEntity(scoreText);
+
+    // Load text/fonts
+    scoreText.loadFont();
+}
 
 // Start the game!
-gameLoop(0);
+
+function startGame() {
+    gameLoop(0);
+}
+
+await buildGame();
+startGame();

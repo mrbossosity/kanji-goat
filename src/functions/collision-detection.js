@@ -49,6 +49,7 @@ class CollisionDetector {
 
             // Otherwise, register collision
             this._player.land(obj);
+            obj.awardPoints();
             obj.collision = true;
             break;
         }

@@ -1,7 +1,7 @@
 import { collisionDetector } from "../functions/collision-detection.js";
 import { globalJump } from "../functions/global-jump.js";
-import { gravity } from "../functions/gravity.js";
 import { ctx } from "../functions/index.js";
+import { scoreText } from "./ScoreText.js";
 
 // Default sprite
 const sprite = new Image();
@@ -60,9 +60,11 @@ export class CliffPlatform {
         this._collapseFrame = 0;
         this._doNotDraw = false;
 
+        // Points
+        this._pointsAwarded = false;
+
         // globalUpdate.addEntity(this);
         globalJump.addEntity(this);
-        gravity.addEntity(this);
         collisionDetector.addEntity(this);
     }
 
@@ -80,6 +82,7 @@ export class CliffPlatform {
         this._collapseTimeoutFrame = 0;
         this._collapseFrame = 0;
         this._doNotDraw = false;
+        this._pointsAwarded = false;
     }
 
     _respawn() {
@@ -95,6 +98,7 @@ export class CliffPlatform {
         this._collapseTimeoutFrame = 0;
         this._collapseFrame = 0;
         this._doNotDraw = false;
+        this._pointsAwarded = false;
     }
 
     _updateJump() {
@@ -228,6 +232,13 @@ export class CliffPlatform {
         this._x = randomX;
         this._y = 512 - height - gap;
         this._resetVariables();
+    }
+
+    awardPoints() {
+        if (!this._pointsAwarded) {
+            scoreText.addPoints(100);
+            this._pointsAwarded = true;
+        }
     }
 
     jump(jumpDistance, jumpFrameCount) {

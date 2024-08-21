@@ -3,6 +3,7 @@ import { globalJump } from "../functions/global-jump.js";
 import { gravity } from "../functions/gravity.js";
 import { ctx, CANVAS_WIDTH, CANVAS_HEIGHT } from "../functions/index.js";
 import resetGame from "../functions/reset-game.js";
+import { scoreText } from "./ScoreText.js";
 
 // Load sprite image
 const sprite = new Image();
@@ -48,11 +49,6 @@ class Player {
     }
 
     // Private
-    // _checkWalls() {
-    //     this._touchingLeftWall = this._x == 0 ? true : false;
-    //     this._touchingRightWall = this._x == 512 - this._width ? true : false;
-    // }
-
     _updateHitbox() {
         this._left = this._x + this._legOffset;
         this._right = this._x + this._width - this._legOffset;
