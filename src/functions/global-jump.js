@@ -1,4 +1,4 @@
-class GlobalJump {
+export default class GlobalJump {
     constructor() {
         this._objectsToJump = [];
         this._isJumping = false;
@@ -24,5 +24,3 @@ class GlobalJump {
         }
     }
 }
-
-export const globalJump = new GlobalJump();

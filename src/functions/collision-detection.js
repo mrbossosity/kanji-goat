@@ -1,8 +1,4 @@
-import { globalUpdate } from "./update.js";
-
-export var objectsToCollide = [];
-
-class CollisionDetector {
+export default class CollisionDetector {
     constructor() {
         this._player;
         this._objectsToCollide = [];
@@ -59,5 +55,3 @@ class CollisionDetector {
         this.checkPlayerCollisions();
     }
 }
-
-export const collisionDetector = new CollisionDetector();

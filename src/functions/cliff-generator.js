@@ -1,7 +1,7 @@
-import { CliffPlatform } from "../entities/CliffPlatform.js";
+import { CliffPlatform } from "../entities/main-screen/CliffPlatform.js";
 
-class CliffGenerator {
-    constructor(width, height, gap) {
+export default class CliffGenerator {
+    constructor(width, height, gap, scoreText, collisionDetector, globalJump) {
         this._width = width;
         this._height = height;
         this._gap = gap;
@@ -10,7 +10,10 @@ class CliffGenerator {
             512 - height,
             width,
             height,
-            gap
+            gap,
+            scoreText,
+            collisionDetector,
+            globalJump
         );
 
         let randomX = Math.floor(Math.random() * (512 - width + 1));
@@ -19,7 +22,10 @@ class CliffGenerator {
             512 - height - gap,
             width,
             height,
-            gap
+            gap,
+            scoreText,
+            collisionDetector,
+            globalJump
         );
     }
 
@@ -37,5 +43,3 @@ class CliffGenerator {
         this._cliff2.initAlt(this._width, this._height, this._gap);
     }
 }
-
-export const cliffGenerator = new CliffGenerator(128, 64, 384);

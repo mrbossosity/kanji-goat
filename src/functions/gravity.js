@@ -1,11 +1,7 @@
-import { globalUpdate } from "./update.js";
-
-class Gravity {
+export default class GravityEnvironment {
     constructor(force) {
         this._floatingEntities = [];
         this._force = force;
-
-        // globalUpdate.addEntity(this);
     }
 
     // Public
@@ -27,5 +23,3 @@ class Gravity {
         }
     }
 }
-
-export const gravity = new Gravity(1.5);
