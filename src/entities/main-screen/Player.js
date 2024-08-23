@@ -90,7 +90,7 @@ export default class Player {
 
     _checkLose() {
         if (this._y > CANVAS_HEIGHT) {
-            // alert("you lose!");
+            alert("you lose!");
             this._gameState.resetGame();
         }
     }
@@ -203,6 +203,7 @@ export default class Player {
         this._isOnGround = false;
         this._glued = false;
         this._gluedObj = null;
+        this._globalJump.playerJumping = true;
     }
 
     land(obj) {

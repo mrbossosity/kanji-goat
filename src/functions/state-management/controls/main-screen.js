@@ -3,6 +3,7 @@ import { ControlState } from "./ControlState.js";
 export default class MainScreenControls extends ControlState {
     constructor(controls) {
         super(controls);
+        this._spacebarDown = false;
     }
 
     _keydownEvents(e) {
@@ -11,7 +12,7 @@ export default class MainScreenControls extends ControlState {
         } else if (e.key === "ArrowRight") {
             this._controllables.player.movingRight = true;
         } else if (e.key === " ") {
-            this._controllables.globalJump.jump(384, 35);
+            if (!this._spacebarDown) this._spacebarDown = true;
         }
     }
 
@@ -20,6 +21,8 @@ export default class MainScreenControls extends ControlState {
             this._controllables.player.movingLeft = false;
         } else if (e.key === "ArrowRight") {
             this._controllables.player.movingRight = false;
+        } else if (e.key === " ") {
+            this._spacebarDown = false;
         }
     }
 
@@ -29,7 +32,11 @@ export default class MainScreenControls extends ControlState {
         document.addEventListener("keyup", (e) => this._keyupEvents(e));
     }
 
-    // update() {}
+    update() {
+        if (this._spacebarDown) {
+            this._controllables.globalJump.jump(384, 35);
+        }
+    }
 
     exit() {
         document.removeEventListener("keydown", (e) => this._keydownEvents);

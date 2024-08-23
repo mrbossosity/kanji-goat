@@ -7,8 +7,8 @@ export default class StatefulBase {
 
     async build() {}
 
-    changeState(name) {
-        this._stateMachine.changeState(name);
+    changeState(name, params) {
+        this._stateMachine.changeState(name, params);
     }
 
     update() {
