@@ -22,6 +22,10 @@ export default class Controls {
     changeState(name, params) {
         this._stateMachine.changeState(name, params);
     }
+
+    update() {
+        this._stateMachine.update();
+    }
 }
 
 // export const controls = new Controls();

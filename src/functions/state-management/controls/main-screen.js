@@ -29,6 +29,8 @@ export default class MainScreenControls extends ControlState {
         document.addEventListener("keyup", (e) => this._keyupEvents(e));
     }
 
+    // update() {}
+
     exit() {
         document.removeEventListener("keydown", (e) => this._keydownEvents);
         document.removeEventListener("keyup", (e) => this._keyupEvents);

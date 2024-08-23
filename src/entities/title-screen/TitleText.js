@@ -42,14 +42,13 @@ export default class TitleText extends TextSprite {
     }
 }
 
-class OscillatingTextState extends SpriteState {
+export class OscillatingTextState extends SpriteState {
     constructor(sprite, amplitude, period) {
         super(sprite);
         this._frame = 0;
         this._amplitude = amplitude; // px
         this._period = period; // frames @120fps
         this._deltaY = this._amplitude / this._period / 2;
-        console.log(this._deltaY);
     }
 
     enter() {

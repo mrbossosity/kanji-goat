@@ -31,6 +31,11 @@ class Game extends StatefulBase {
         this._stateMachine.addState("main-screen", mainScreenGame);
     }
 
+    update() {
+        super.update();
+        this._controls.update();
+    }
+
     gameloop(timestamp) {
         let timeElapsed = timestamp - this._lastTime;
         if (timeElapsed >= this._interval) {

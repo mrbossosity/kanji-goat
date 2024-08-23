@@ -13,7 +13,8 @@ export default class CliffGenerator {
             gap,
             scoreText,
             collisionDetector,
-            globalJump
+            globalJump,
+            true
         );
 
         let randomX = Math.floor(Math.random() * (512 - width + 1));
@@ -25,7 +26,8 @@ export default class CliffGenerator {
             gap,
             scoreText,
             collisionDetector,
-            globalJump
+            globalJump,
+            false
         );
     }
 

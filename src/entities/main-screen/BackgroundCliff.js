@@ -29,6 +29,7 @@ export default class BackgroundCliff {
         this._jumpDistance;
         this._jumpFrameCount;
         this._jumpFrame = 0;
+        this._globalJump.backgroundScrolling = false;
     }
 
     jump(jumpDistance, jumpFrameCount) {
@@ -41,7 +42,7 @@ export default class BackgroundCliff {
     update() {
         if (this._jumpFrame >= this._jumpFrameCount) {
             this._isJumping = false;
-            this._globalJump.isJumping = false;
+            this._globalJump.backgroundScrolling = false;
         }
 
         if (this._isJumping) {
@@ -56,7 +57,7 @@ export default class BackgroundCliff {
                 this._y2 = this._y2 - 512 * 2 + delta;
             }
             this._jumpFrame++;
-            this._globalJump.isJumping = true;
+            this._globalJump.backgroundScrolling = true;
         }
     }
 

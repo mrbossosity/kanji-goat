@@ -16,7 +16,6 @@ export default class Sprite extends StatefulBase {
 
         this._statesInfo = statesInfo;
         // statesInfo formatted as [{ name: "", path: "", animates: boolean, loops: boolean, fixedLength: boolean, stateDuration: int }]
-        // this._spriteStates = {};
         this._renderSpecs; // communicated from current sprite state each frame
     }
 
@@ -56,6 +55,10 @@ export default class Sprite extends StatefulBase {
         this._height = value;
     }
 
+    get gameState() {
+        return this._gameState;
+    }
+
     get stateMachine() {
         return this._stateMachine;
     }
@@ -73,7 +76,6 @@ export default class Sprite extends StatefulBase {
             const spriteState = new SpriteState(this, stateInfo);
             await spriteState.build();
             this._stateMachine.addState(spriteState.name, spriteState);
-            // this._spriteStates[stateInfo.name] = spriteState;
         }
     }
 

@@ -27,7 +27,7 @@ export default class MainScreenGame extends GameState {
         this._cliffGenerator.reset();
         this._backgroundCliff.reset();
         this._scoreText.reset();
-        this._globalJump.isJumping = false;
+        this._globalJump.reset();
     }
 
     async build() {
@@ -88,7 +88,7 @@ export default class MainScreenGame extends GameState {
         this._player = new Player(
             this,
             192,
-            321,
+            0,
             128,
             128,
             8,

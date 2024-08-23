@@ -1,5 +1,6 @@
 import StaticImage from "../../../entities/StaticImage.js";
 import JLPTButton from "../../../entities/title-screen/JLPTButton.js";
+import PlayButton from "../../../entities/title-screen/PlayButton.js";
 import TitleText from "../../../entities/title-screen/TitleText.js";
 import GameState from "./GameState.js";
 
@@ -13,6 +14,7 @@ export default class TitleScreenGame extends GameState {
         this._n3Button;
         this._n2Button;
         this._n1Button;
+        this._playButton;
     }
 
     async build() {
@@ -56,11 +58,14 @@ export default class TitleScreenGame extends GameState {
 
         await this._titleText.build();
 
+        const buttonsY = 205;
+        const buttonsGap = 75;
+
         this._n5Button = new JLPTButton(
             "N5 Button",
             this,
             124,
-            225,
+            buttonsY,
             64,
             64,
             "/src/assets/images/n5-button-64",
@@ -72,7 +77,7 @@ export default class TitleScreenGame extends GameState {
             "N4 Button",
             this,
             224,
-            225,
+            buttonsY,
             64,
             64,
             "/src/assets/images/n4-button-64",
@@ -84,7 +89,7 @@ export default class TitleScreenGame extends GameState {
             "N3 Button",
             this,
             324,
-            225,
+            buttonsY,
             64,
             64,
             "/src/assets/images/n3-button-64",
@@ -96,7 +101,7 @@ export default class TitleScreenGame extends GameState {
             "N2 Button",
             this,
             174,
-            325,
+            buttonsY + buttonsGap,
             64,
             64,
             "/src/assets/images/n2-button-64",
@@ -108,7 +113,7 @@ export default class TitleScreenGame extends GameState {
             "N1 Button",
             this,
             274,
-            325,
+            buttonsY + buttonsGap,
             64,
             64,
             "/src/assets/images/n1-button-64",
@@ -116,12 +121,23 @@ export default class TitleScreenGame extends GameState {
         );
         await this._n1Button.build();
 
+        this._playButton = new PlayButton(
+            "Play Button",
+            this,
+            184,
+            375,
+            96,
+            64
+        );
+        await this._playButton.build();
+
         this._updater.addEntity(this._titleText);
         this._updater.addEntity(this._n5Button);
         this._updater.addEntity(this._n4Button);
         this._updater.addEntity(this._n3Button);
         this._updater.addEntity(this._n2Button);
         this._updater.addEntity(this._n1Button);
+        this._updater.addEntity(this._playButton);
 
         this._animator.addEntity(this._backgroundSky);
         this._animator.addEntity(this._backgroundOverlay);
@@ -131,6 +147,7 @@ export default class TitleScreenGame extends GameState {
         this._animator.addEntity(this._n3Button);
         this._animator.addEntity(this._n2Button);
         this._animator.addEntity(this._n1Button);
+        this._animator.addEntity(this._playButton);
     }
 
     enter() {

@@ -34,7 +34,8 @@ export class CliffPlatform {
         gap,
         scoreText,
         collisionDetector,
-        globalJump
+        globalJump,
+        pointsAwarded
     ) {
         this._x = x;
         this._y = y;
@@ -67,7 +68,7 @@ export class CliffPlatform {
         this._doNotDraw = false;
 
         // Points
-        this._pointsAwarded = false;
+        this._pointsAwarded = pointsAwarded;
         this._scoreText = scoreText;
 
         // globalUpdate.addEntity(this);
@@ -232,6 +233,7 @@ export class CliffPlatform {
         this._x = 128 + width / 2;
         this._y = 512 - height;
         this._resetVariables();
+        this._pointsAwarded = true;
     }
 
     initAlt(width, height, gap) {
@@ -243,7 +245,7 @@ export class CliffPlatform {
 
     awardPoints() {
         if (!this._pointsAwarded) {
-            this._scoreText.addPoints(100);
+            this._scoreText.addPoints(10);
             this._pointsAwarded = true;
         }
     }

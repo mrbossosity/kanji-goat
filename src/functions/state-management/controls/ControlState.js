@@ -5,5 +5,6 @@ export class ControlState {
     }
 
     enter() {}
+    update() {}
     exit() {}
 }

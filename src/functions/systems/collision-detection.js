@@ -21,12 +21,7 @@ export default class CollisionDetector {
                 obj.collision = false;
                 continue;
             }
-            // Ignore if player is fully above object or below its surface
-            if (this._player.bottom < obj.top || this._player.top > obj.top) {
-                this._player.fall();
-                obj.collision = false;
-                continue;
-            }
+
             // Ignore if either side of the player is beyond either side of the object
             if (
                 this._player.left > obj.right ||
@@ -36,6 +31,7 @@ export default class CollisionDetector {
                 obj.collision = false;
                 continue;
             }
+
             // Final check: ignore if object is not accepting collisions
             if (!obj.acceptingCollisions) {
                 this._player.fall();
@@ -43,11 +39,16 @@ export default class CollisionDetector {
                 continue;
             }
 
-            // Otherwise, register collision
-            this._player.land(obj);
-            obj.awardPoints();
-            obj.collision = true;
-            break;
+            // If player's bottom is between the object's top and bottom, register collision
+            if (
+                this._player.bottom >= obj.top &&
+                this._player.bottom <= obj.bottom + this._player.speedY
+            ) {
+                this._player.land(obj);
+                obj.awardPoints();
+                obj.collision = true;
+                break;
+            }
         }
     }
 

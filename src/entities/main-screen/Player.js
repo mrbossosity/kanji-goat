@@ -50,6 +50,7 @@ export default class Player {
 
         this._frame = 0; // for alternating sprites
 
+        this._globalJump = globalJump;
         globalJump.addEntity(this);
         gravityEnvironment.addEntity(this);
         collisionDetector.player = this;
@@ -89,7 +90,7 @@ export default class Player {
 
     _checkLose() {
         if (this._y > CANVAS_HEIGHT) {
-            alert("you lose!");
+            // alert("you lose!");
             this._gameState.resetGame();
         }
     }
@@ -192,6 +193,7 @@ export default class Player {
         if (!this._isJumping && !this._isFreeFalling) {
             this._speedY = this._jumpSpeed;
             this._isJumping = true;
+            this._globalJump.playerJumping = false;
         }
         this._isOnGround = false;
         this._updateMovementY();
@@ -210,6 +212,7 @@ export default class Player {
         this._isOnGround = true;
         this._glued = true;
         this._gluedObj = obj;
+        this._globalJump.playerJumping = false;
 
         this._y = obj.y - this._height;
     }
@@ -217,6 +220,7 @@ export default class Player {
     reset() {
         this._x = this._initX;
         this._y = this._initY;
+        this._updateHitbox();
 
         this._movingLeft = false;
         this._movingRight = false;
@@ -227,6 +231,7 @@ export default class Player {
         this._isOnGround = false;
         this._glued = false;
         this._gluedObj = null;
+        this._globalJump.playerJumping = false;
     }
 
     update() {

@@ -11,6 +11,9 @@ export default class GameState extends State {
     }
 
     // Public
+    get game() {
+        return this._game;
+    }
     get updater() {
         return this._updater;
     }
