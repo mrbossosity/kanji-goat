@@ -1,13 +1,12 @@
 import BackgroundCliff from "../../../entities/main-screen/BackgroundCliff.js";
 import Player from "../../../entities/main-screen/Player.js";
 import ScoreText from "../../../entities/main-screen/ScoreText.js";
-import Sky from "../../../entities/main-screen/Sky.js";
+import StaticImage from "../../../entities/StaticImage.js";
 import CliffGenerator from "../../cliff-generator.js";
-import CollisionDetector from "../../collision-detection.js";
+import CollisionDetector from "../../systems/collision-detection.js";
 import DBLoader from "../../db-loader.js";
-import GlobalJump from "../../global-jump.js";
-import GravityEnvironment from "../../gravity.js";
-// import { controls } from "../controls/Controls.js";
+import GlobalJump from "../../systems/global-jump.js";
+import GravityEnvironment from "../../systems/gravity.js";
 import GameState from "./GameState.js";
 
 export default class MainScreenGame extends GameState {
@@ -38,7 +37,17 @@ export default class MainScreenGame extends GameState {
         this._globalJump = new GlobalJump();
 
         // Construct entities
-        this._backgroundSky = new Sky(0, 0);
+        this._backgroundSky = new StaticImage(
+            "Background Sky",
+            this,
+            0,
+            0,
+            512,
+            512,
+            "/src/assets/images/sky-512.png"
+        );
+        await this._backgroundSky.build();
+
         this._backgroundCliff = new BackgroundCliff(
             this,
             0,
@@ -49,16 +58,24 @@ export default class MainScreenGame extends GameState {
             512,
             this._globalJump
         );
+
         this._scoreText = new ScoreText(
+            "Score Text",
             this,
-            0,
-            0,
+            20,
+            45,
+            "Score: ",
             "Supply Text",
             "url(/src/assets/fonts/supply-center.ttf)",
             25,
-            "white",
-            20
+            "left",
+            "darkorange",
+            "black",
+            2,
+            4
         );
+        await this._scoreText.build();
+
         this._cliffGenerator = new CliffGenerator(
             128,
             64,
@@ -120,7 +137,6 @@ export default class MainScreenGame extends GameState {
             },
         ]);
         await this._dbLoader.load();
-        await this._scoreText.build();
     }
 
     enter() {
@@ -132,5 +148,3 @@ export default class MainScreenGame extends GameState {
 
     exit() {}
 }
-
-// export const mainScreenGame = new MainScreenGame();

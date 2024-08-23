@@ -1,42 +1,47 @@
 import { ctx } from "../../functions/index.js";
+import TextSprite from "../TextSprite.js";
 
-export default class ScoreText {
+export default class ScoreText extends TextSprite {
     constructor(
+        name,
         gameState,
         x,
         y,
+        text,
         fontName,
         fontURL,
         fontSize,
-        fontColor,
-        margin
+        textAlign,
+        color,
+        subColor,
+        subColorOffsetX,
+        subColorOffsetY
     ) {
-        this._x = x;
-        this._y = y;
-
-        this._font;
-        this._fontName = fontName;
-        this._fontURL = fontURL;
-        this._fontLoaded = false;
-        this._fontSize = fontSize;
-        this._fontColor = fontColor;
-        this._margin = margin;
-
-        this._baseText = "Score: ";
+        super(
+            name,
+            gameState,
+            x,
+            y,
+            text,
+            fontName,
+            fontURL,
+            fontSize,
+            textAlign,
+            color,
+            subColor,
+            subColorOffsetX,
+            subColorOffsetY
+        );
         this._score = 0;
-        this._renderText;
-
-        gameState.updater.addEntity(this);
     }
-
-    // Private
 
     // Public
     async build() {
         const font = new FontFace(this._fontName, this._fontURL);
         document.fonts.add(font);
         this._font = await font.load();
-        this._fontLoaded = true;
+
+        this._gameState.updater.addEntity(this);
     }
 
     addPoints(num) {
@@ -48,36 +53,24 @@ export default class ScoreText {
     }
 
     update() {
-        if (this._fontLoaded) {
-            this._renderText = this._baseText + this._score.toString();
-        }
+        this._text = "Score: " + this._score.toString();
     }
 
-    render() {
-        ctx.font = `${this._fontSize}px ${this._fontName}`;
-        ctx.textAlign = "left";
-        ctx.fillStyle = "black";
-        ctx.fillText(
-            this._renderText,
-            this._x + this._margin - 4,
-            this._y + this._margin + this._fontSize + 2
-        );
+    // render() {
+    //     ctx.font = `${this._fontSize}px ${this._fontName}`;
+    //     ctx.textAlign = "left";
+    //     ctx.fillStyle = "black";
+    //     ctx.fillText(
+    //         this._renderText,
+    //         this._x + this._margin - 4,
+    //         this._y + this._margin + this._fontSize + 2
+    //     );
 
-        ctx.fillStyle = this._fontColor;
-        ctx.fillText(
-            this._renderText,
-            this._x + this._margin,
-            this._y + this._margin + this._fontSize
-        );
-    }
+    //     ctx.fillStyle = this._fontColor;
+    //     ctx.fillText(
+    //         this._renderText,
+    //         this._x + this._margin,
+    //         this._y + this._margin + this._fontSize
+    //     );
+    // }
 }
-
-// export const scoreText = new ScoreText(
-//     0,
-//     0,
-//     "Supply Text",
-//     "url(/src/assets/fonts/supply-center.ttf)",
-//     25,
-//     "white",
-//     20
-// );

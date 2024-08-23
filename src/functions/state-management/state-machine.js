@@ -5,6 +5,10 @@ export default class StateMachine {
         this._states = {};
     }
 
+    get currentState() {
+        return this._currentState;
+    }
+
     addState(name, state) {
         this._states[name] = state;
     }

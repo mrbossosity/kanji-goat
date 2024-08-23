@@ -1,5 +1,4 @@
 import { ctx, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../functions/index.js";
-// import resetGame from "../../functions/reset-game.js";
 
 // Load sprite image
 const sprite = new Image();

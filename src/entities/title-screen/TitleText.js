@@ -1,45 +1,85 @@
-import { ctx } from "../../functions/index.js";
-import Sprite from "../Sprite.js";
+import SpriteState from "../SpriteState.js";
+import TextSprite from "../TextSprite.js";
 
-export default class TitleText extends Sprite {
+export default class TitleText extends TextSprite {
     constructor(
+        name,
         gameState,
         x,
         y,
-        width,
-        height,
+        text,
         fontName,
         fontURL,
         fontSize,
+        textAlign,
         color,
-        subColor
+        subColor,
+        subColorOffsetX,
+        subColorOffsetY
     ) {
-        super(gameState, x, y, width, height);
-        this._fontName = fontName;
-        this._fontURL = fontURL;
-        this._font;
-        this._fontLoaded = false;
-        this._fontSize = fontSize;
-        this._renderText = "漢字 Goat";
-        this._color = color;
-        this._subColor = subColor;
+        super(
+            name,
+            gameState,
+            x,
+            y,
+            text,
+            fontName,
+            fontURL,
+            fontSize,
+            textAlign,
+            color,
+            subColor,
+            subColorOffsetX,
+            subColorOffsetY
+        );
     }
 
     async build() {
-        // Load font
-        const font = new FontFace(this._fontName, this._fontURL);
-        document.fonts.add(font);
-        this._font = await font.load();
-        this._fontLoaded = true;
+        super.build();
+        const oscillatingTextState = new OscillatingTextState(this, 40, 180);
+        this._stateMachine.addState("oscillating", oscillatingTextState);
+        this._stateMachine.changeState("oscillating");
+    }
+}
+
+class OscillatingTextState extends SpriteState {
+    constructor(sprite, amplitude, period) {
+        super(sprite);
+        this._frame = 0;
+        this._amplitude = amplitude; // px
+        this._period = period; // frames @120fps
+        this._deltaY = this._amplitude / this._period / 2;
+        console.log(this._deltaY);
     }
 
-    render() {
-        ctx.font = `${this._fontSize}px ${this._fontName}`;
-        ctx.textAlign = "center";
-        ctx.fillStyle = this._subColor;
-        ctx.fillText(this._renderText, this._x - 4, this._y + 4);
+    enter() {
+        super.enter();
+    }
 
-        ctx.fillStyle = this._color;
-        ctx.fillText(this._renderText, this._x, this._y);
+    update() {
+        if (this._frame == this._period) {
+            this._frame = 0;
+        }
+
+        if (
+            this._frame < this._period / 4 ||
+            (this._frame >= this._period / 2 &&
+                this._frame < (this._period / 4) * 3)
+        ) {
+            this._sprite.y += this._deltaY;
+        } else if (
+            (this._frame >= this._period / 4 &&
+                this._frame < this._period / 2) ||
+            (this._frame >= (this._period / 4) * 3 &&
+                this._frame < this._period)
+        ) {
+            this._sprite.y -= this._deltaY;
+        }
+
+        this._frame++;
+    }
+
+    exit() {
+        super.exit();
     }
 }
