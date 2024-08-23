@@ -1,4 +1,4 @@
-import { canvas, ctx } from "./index.js";
+import { canvas, ctx } from "../index.js";
 
 export default class Animator {
     constructor() {
@@ -16,5 +16,3 @@ export default class Animator {
         }
     }
 }
-
-// export const globalRender = new GlobalRender();

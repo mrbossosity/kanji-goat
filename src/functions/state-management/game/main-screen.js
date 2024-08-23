@@ -2,10 +2,10 @@ import BackgroundCliff from "../../../entities/main-screen/BackgroundCliff.js";
 import Player from "../../../entities/main-screen/Player.js";
 import ScoreText from "../../../entities/main-screen/ScoreText.js";
 import StaticImage from "../../../entities/StaticImage.js";
-import CollisionDetector from "../../systems/collision-detection.js";
+import CollisionDetector from "../../systems/CollisionDetector.js";
 import DBLoader from "../../db-loader.js";
-import GlobalJump from "../../systems/global-jump.js";
-import GravityEnvironment from "../../systems/gravity.js";
+import GlobalJump from "../../systems/GlobalJump.js";
+import GravityEnvironment from "../../systems/GravityEnvironment.js";
 import GameState from "./GameState.js";
 import CliffPlatform from "../../../entities/main-screen/CliffPlatform.js";
 

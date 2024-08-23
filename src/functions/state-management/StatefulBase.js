@@ -1,4 +1,4 @@
-import StateMachine from "./state-machine.js";
+import StateMachine from "./StateMachine.js";
 
 export default class StatefulBase {
     constructor() {

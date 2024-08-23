@@ -1,10 +1,8 @@
-import Animator from "../../animator.js";
-import Updater from "../../updater.js";
-import State from "../state.js";
+import Animator from "../Animator.js";
+import Updater from "../Updater.js";
 
-export default class GameState extends State {
+export default class GameState {
     constructor(game) {
-        super(game);
         this._game = game;
         this._updater = new Updater();
         this._animator = new Animator();
