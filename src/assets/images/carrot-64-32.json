@@ -1,0 +1,30 @@
+{ "frames": {
+   "carrot-32.ase": {
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://github.com/LibreSprite/LibreSprite/",
+  "version": "1.2-973d0e3d-SDL",
+  "image": "C:\\Users\\sagek\\Documents\\LibreSprite\\Kanji Goat\\exported-assets\\carrot-64-32.png",
+  "format": "RGBA8888",
+  "size": { "w": 64, "h": 32 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Tag", "from": 0, "to": 0, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Shadow", "opacity": 255, "blendMode": "normal" },
+   { "name": "Base Color", "opacity": 255, "blendMode": "normal" },
+   { "name": "Shadow", "opacity": 255, "blendMode": "normal" },
+   { "name": "Detail", "opacity": 255, "blendMode": "normal" },
+   { "name": "Highlight", "opacity": 135, "blendMode": "normal" },
+   { "name": "Border", "opacity": 255, "blendMode": "normal" }
+  ]
+ }
+}

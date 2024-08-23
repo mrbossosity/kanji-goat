@@ -1,6 +1,6 @@
 import StatefulBase from "../StatefulBase.js";
-import MainScreenControls from "./main-screen.js";
-import TitleScreenControls from "./title-screen.js";
+import MainScreenControls from "./MainScreenControls.js";
+import TitleScreenControls from "./TitleScreenControls.js";
 
 export default class Controls extends StatefulBase {
     constructor(game) {

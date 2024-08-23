@@ -1,12 +1,12 @@
 import Controls from "../controls/Controls.js";
-import MainScreenGame from "./main-screen.js";
+import MainScreenGame from "./MainScreenGame.js";
 import StatefulBase from "../StatefulBase.js";
-import TitleScreenGame from "./title-screen.js";
+import TitleScreenGame from "./TitleScreenGame.js";
 
-class Game extends StatefulBase {
-    constructor() {
+export default class Game extends StatefulBase {
+    constructor(fps) {
         super();
-        this._fps = 120;
+        this._fps = fps;
         this._lastTime = 0;
         this._interval = 1000 / this._fps;
         this._controls;
@@ -46,5 +46,3 @@ class Game extends StatefulBase {
         requestAnimationFrame(this.gameloop.bind(this));
     }
 }
-
-export const game = new Game();
