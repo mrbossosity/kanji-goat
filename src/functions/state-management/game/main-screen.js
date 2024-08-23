@@ -2,18 +2,20 @@ import BackgroundCliff from "../../../entities/main-screen/BackgroundCliff.js";
 import Player from "../../../entities/main-screen/Player.js";
 import ScoreText from "../../../entities/main-screen/ScoreText.js";
 import StaticImage from "../../../entities/StaticImage.js";
-import CliffGenerator from "../../cliff-generator.js";
 import CollisionDetector from "../../systems/collision-detection.js";
 import DBLoader from "../../db-loader.js";
 import GlobalJump from "../../systems/global-jump.js";
 import GravityEnvironment from "../../systems/gravity.js";
 import GameState from "./GameState.js";
+import CliffPlatform from "../../../entities/main-screen/CliffPlatform.js";
 
 export default class MainScreenGame extends GameState {
     constructor(game) {
         super(game);
         this._backgroundSky;
         this._backgroundCliff;
+        this._cliff1;
+        this._cliff2;
         this._scoreText;
         this._player;
         this._gravity;
@@ -24,8 +26,9 @@ export default class MainScreenGame extends GameState {
 
     resetGame() {
         this._player.reset();
-        this._cliffGenerator.reset();
         this._backgroundCliff.reset();
+        this._cliff1.init();
+        this._cliff2.initAlt();
         this._scoreText.reset();
         this._globalJump.reset();
     }
@@ -76,13 +79,41 @@ export default class MainScreenGame extends GameState {
         );
         await this._scoreText.build();
 
-        this._cliffGenerator = new CliffGenerator(
-            128,
-            64,
-            384,
+        // this._cliffGenerator = new CliffGenerator(
+        //     128,
+        //     64,
+        //     384,
+        //     this._scoreText,
+        //     this._collisionDetector,
+        //     this._globalJump
+        // );
+        const cliffWidth = 128;
+        const cliffHeight = 64;
+        const cliffGap = 384;
+
+        this._cliff1 = new CliffPlatform(
+            128 + cliffWidth / 2,
+            512 - cliffHeight,
+            cliffWidth,
+            cliffHeight,
+            cliffGap,
             this._scoreText,
             this._collisionDetector,
-            this._globalJump
+            this._globalJump,
+            true
+        );
+
+        let randomX = Math.floor(Math.random() * (512 - cliffWidth + 1));
+        this._cliff2 = new CliffPlatform(
+            randomX,
+            512 - cliffHeight - cliffGap,
+            cliffWidth,
+            cliffHeight,
+            cliffGap,
+            this._scoreText,
+            this._collisionDetector,
+            this._globalJump,
+            false
         );
 
         this._player = new Player(
@@ -100,16 +131,16 @@ export default class MainScreenGame extends GameState {
         );
 
         this._updater.addEntity(this._backgroundCliff);
-        this._updater.addEntity(this._cliffGenerator.cliff1);
-        this._updater.addEntity(this._cliffGenerator.cliff2);
+        this._updater.addEntity(this._cliff1);
+        this._updater.addEntity(this._cliff2);
         this._updater.addEntity(this._player);
         this._updater.addEntity(this._gravity);
         this._updater.addEntity(this._collisionDetector);
 
         this._animator.addEntity(this._backgroundSky);
         this._animator.addEntity(this._backgroundCliff);
-        this._animator.addEntity(this._cliffGenerator.cliff1);
-        this._animator.addEntity(this._cliffGenerator.cliff2);
+        this._animator.addEntity(this._cliff1);
+        this._animator.addEntity(this._cliff2);
         this._animator.addEntity(this._player);
         this._animator.addEntity(this._scoreText);
 

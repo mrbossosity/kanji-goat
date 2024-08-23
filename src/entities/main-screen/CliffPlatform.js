@@ -25,7 +25,7 @@ const collapseMap = await fetch(
         return mappedSprite;
     });
 
-export class CliffPlatform {
+export default class CliffPlatform {
     constructor(
         x,
         y,
@@ -229,17 +229,17 @@ export class CliffPlatform {
         this._collision = value;
     }
 
-    init(width, height) {
-        this._x = 128 + width / 2;
-        this._y = 512 - height;
+    init() {
+        this._x = 128 + this._width / 2;
+        this._y = 512 - this._height;
         this._resetVariables();
         this._pointsAwarded = true;
     }
 
-    initAlt(width, height, gap) {
-        let randomX = Math.floor(Math.random() * (512 - width + 1));
+    initAlt() {
+        let randomX = Math.floor(Math.random() * (512 - this._width + 1));
         this._x = randomX;
-        this._y = 512 - height - gap;
+        this._y = 512 - this._height - this._gap;
         this._resetVariables();
     }
 
