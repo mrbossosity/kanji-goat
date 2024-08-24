@@ -1,4 +1,4 @@
-import { ctx } from "../../functions/index.js";
+import { ctx, GLOBAL_MS } from "../../functions/index.js";
 
 // Default sprite
 const sprite = new Image();
@@ -153,7 +153,7 @@ export default class CliffPlatform {
         }
 
         // Else, advance timer and animation frame
-        this._collapseTimer += 16; // 16ms = 60fps
+        this._collapseTimer += GLOBAL_MS; // 16ms = 60fps
         if (this._collapseTimer >= collapseMap[this._collapseFrame].duration) {
             this._collapseFrame++;
             this._collapseTimer = 0;

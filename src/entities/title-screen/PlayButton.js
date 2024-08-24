@@ -1,6 +1,6 @@
 import { canvas } from "../../functions/index.js";
+import OscillatingImageState from "../OscillatingImageState.js";
 import Sprite from "../Sprite.js";
-import { OscillatingImageState } from "../SpriteState.js";
 
 export default class PlayButton extends Sprite {
     constructor(name, gameState, x, y, width, height) {
@@ -17,6 +17,7 @@ export default class PlayButton extends Sprite {
                 loops: false,
                 fixedLength: false,
                 stateDuration: null,
+                stateControlsMvmt: true,
             },
             40,
             180

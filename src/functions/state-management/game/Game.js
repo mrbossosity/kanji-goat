@@ -4,11 +4,11 @@ import StatefulBase from "../StatefulBase.js";
 import TitleScreenGame from "./TitleScreenGame.js";
 
 export default class Game extends StatefulBase {
-    constructor(fps) {
+    constructor(fps, ms) {
         super();
         this._fps = fps;
         this._lastTime = 0;
-        this._interval = 1000 / this._fps;
+        this._interval = ms;
         this._controls;
     }
 

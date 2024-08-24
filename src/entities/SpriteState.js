@@ -1,8 +1,19 @@
+import { GLOBAL_MS } from "../functions/index.js";
+
 export default class SpriteState {
     constructor(sprite, stateInfo) {
         this._sprite = sprite;
         this._x = sprite.x;
         this._y = sprite.y;
+        // stateInfo formatted as {
+        //     name: "",
+        //     path: "",
+        //     animates: boolean,
+        //     loops: boolean,
+        //     fixedLength: boolean,
+        //     stateDuration: int,
+        //     stateControlsMvmt: boolean
+        // }
         if (stateInfo) {
             this._name = stateInfo.name;
             this._imgURL = `${stateInfo.path}.png`;
@@ -11,6 +22,7 @@ export default class SpriteState {
             this._loops = stateInfo.loops;
             this._fixedLength = stateInfo.fixedLength; // true if state exits after a finite period
             this._stateDuration = stateInfo.stateDuration; // finite state length (in frames)
+            this._stateControlsMvmt = stateInfo.stateControlsMvmt;
         }
 
         this._frames;
@@ -53,6 +65,10 @@ export default class SpriteState {
     }
 
     update() {
+        if (!this._stateControlsMvmt) {
+            this._x = this._sprite.x;
+            this._y = this._sprite.y;
+        }
         // Check if fixed length state has ended
         if (this._fixedLength) {
             if (this._stateTimer == this._stateDuration) {
@@ -70,10 +86,13 @@ export default class SpriteState {
 
         // Advance frame timer and update animation frame
         if (this._animates) {
-            this._frameTimer += 16; // 16ms = 60fps
+            this._frameTimer += GLOBAL_MS;
             if (this._frameTimer >= this._framesMap[this._frameNum].duration) {
+                this._frameNum++;
+                this._frameTimer = 0;
+
                 // If on last frame, loop OR end animation and exit state
-                if (this._frameNum + 1 == this._framesMap.length) {
+                if (this._frameNum == this._framesMap.length) {
                     if (this._loops) {
                         this._frameNum = 0;
                         this._frameTimer = 0;
@@ -86,8 +105,6 @@ export default class SpriteState {
                         return;
                     }
                 }
-                this._frameNum++;
-                this._frameTimer = 0;
             }
         }
 
@@ -108,39 +125,5 @@ export default class SpriteState {
     exit() {
         console.log(`${this._sprite.name} exiting state named ${this._name}`);
         // this._sprite.changeState("", {});
-    }
-}
-
-export class OscillatingImageState extends SpriteState {
-    constructor(sprite, stateInfo, amplitude, period) {
-        super(sprite, stateInfo);
-        this._frame = 0;
-        this._amplitude = amplitude; // px
-        this._period = period; // frames @120fps
-        this._deltaY = this._amplitude / this._period / 2;
-    }
-
-    update() {
-        super.update();
-        if (this._frame == this._period) {
-            this._frame = 0;
-        }
-
-        if (
-            this._frame < this._period / 4 ||
-            (this._frame >= this._period / 2 &&
-                this._frame < (this._period / 4) * 3)
-        ) {
-            this._y += this._deltaY;
-        } else if (
-            (this._frame >= this._period / 4 &&
-                this._frame < this._period / 2) ||
-            (this._frame >= (this._period / 4) * 3 &&
-                this._frame < this._period)
-        ) {
-            this._y -= this._deltaY;
-        }
-
-        this._frame++;
     }
 }

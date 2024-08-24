@@ -117,11 +117,13 @@ export default class MainScreenGame extends GameState {
         );
 
         this._player = new Player(
+            "Player",
             this,
             192,
             0,
             128,
             128,
+            40,
             8,
             0,
             26,
@@ -129,6 +131,7 @@ export default class MainScreenGame extends GameState {
             this._collisionDetector,
             this._globalJump
         );
+        await this._player.build();
 
         this._updater.addEntity(this._backgroundCliff);
         this._updater.addEntity(this._cliff1);

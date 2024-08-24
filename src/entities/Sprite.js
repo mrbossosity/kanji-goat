@@ -1,9 +1,17 @@
 import { ctx } from "../functions/index.js";
 import StatefulBase from "../functions/state-management/StatefulBase.js";
-import SpriteState from "./SpriteState.js";
 
 export default class Sprite extends StatefulBase {
-    constructor(name, gameState, x, y, width, height, statesInfo) {
+    constructor(
+        name,
+        gameState,
+        x,
+        y,
+        width,
+        height,
+        hitboxOffsetX,
+        hitboxOffsetY
+    ) {
         super();
         this._name = name;
         this._gameState = gameState;
@@ -14,11 +22,26 @@ export default class Sprite extends StatefulBase {
         this._width = width;
         this._height = height;
 
-        this._statesInfo = statesInfo;
-        // statesInfo formatted as [{ name: "", path: "", animates: boolean, loops: boolean, fixedLength: boolean, stateDuration: int }]
+        // Hitbox
+        this._hitboxOffsetX = hitboxOffsetX;
+        this._hitboxOffsetY = hitboxOffsetY;
+        this._left = this._x + this._hitboxOffsetX;
+        this._right = this._x + this._width - this._hitboxOffsetX;
+        this._top = this._y + this._hitboxOffsetY;
+        this._bottom = this._y + this._height - this._hitboxOffsetY;
+
         this._renderSpecs; // communicated from current sprite state each frame
     }
 
+    // Private
+    _updateHitbox() {
+        this._left = this._x + this._hitboxOffsetX;
+        this._right = this._x + this._width - this._hitboxOffsetX;
+        this._top = this._y;
+        this._bottom = this._y + this._height;
+    }
+
+    //Public
     get name() {
         return this._name;
     }
@@ -55,6 +78,22 @@ export default class Sprite extends StatefulBase {
         this._height = value;
     }
 
+    get left() {
+        return this._left;
+    }
+
+    get right() {
+        return this._right;
+    }
+
+    get top() {
+        return this._top;
+    }
+
+    get bottom() {
+        return this._bottom;
+    }
+
     get gameState() {
         return this._gameState;
     }
@@ -71,13 +110,7 @@ export default class Sprite extends StatefulBase {
         this._renderSpecs = value;
     }
 
-    async build() {
-        for (let stateInfo of this._statesInfo) {
-            const spriteState = new SpriteState(this, stateInfo);
-            await spriteState.build();
-            this._stateMachine.addState(spriteState.name, spriteState);
-        }
-    }
+    async build() {}
 
     changeState(name, params) {
         this._stateMachine.changeState(name, params);

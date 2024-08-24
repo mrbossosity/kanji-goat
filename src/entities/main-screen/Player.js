@@ -1,19 +1,16 @@
 import { ctx, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../functions/index.js";
+import Sprite from "../Sprite.js";
+import SpriteState from "../SpriteState.js";
 
-// Load sprite image
-const sprite = new Image();
-sprite.src = "/src/assets/images/goat-128.png";
-
-const altSprite = new Image();
-altSprite.src = "/src/assets/images/goat-alt-128.png";
-
-export default class Player {
+export default class Player extends Sprite {
     constructor(
+        name,
         gameState,
         x,
         y,
         width,
         height,
+        hitboxOffsetX,
         speedX,
         speedY,
         jumpSpeed,
@@ -21,23 +18,11 @@ export default class Player {
         collisionDetector,
         globalJump
     ) {
-        this._gameState = gameState;
-        this._x = x;
-        this._initX = x;
-        this._y = y;
-        this._initY = y;
-        this._width = width;
-        this._height = height;
+        super(name, gameState, x, y, width, height, hitboxOffsetX);
+
         this._speedX = speedX;
         this._speedY = speedY;
         this._jumpSpeed = jumpSpeed;
-
-        // Hitbox markers
-        this._legOffset = 40;
-        this._left = this._x + this._legOffset;
-        this._right = this._x + this._width - this._legOffset;
-        this._top = this._y;
-        this._bottom = this._y + this._height;
 
         // Collision status
         this._movingLeft;
@@ -48,20 +33,10 @@ export default class Player {
         this._glued = false;
         this._gluedObj;
 
-        this._frame = 0; // for alternating sprites
-
         this._globalJump = globalJump;
         globalJump.addEntity(this);
         gravityEnvironment.addEntity(this);
         collisionDetector.player = this;
-    }
-
-    // Private
-    _updateHitbox() {
-        this._left = this._x + this._legOffset;
-        this._right = this._x + this._width - this._legOffset;
-        this._top = this._y;
-        this._bottom = this._y + this._height;
     }
 
     _updateMovementX() {
@@ -90,7 +65,7 @@ export default class Player {
 
     _checkLose() {
         if (this._y > CANVAS_HEIGHT) {
-            alert("you lose!");
+            alert("Game Over!");
             this._gameState.resetGame();
         }
     }
@@ -98,14 +73,6 @@ export default class Player {
     // Public
     get legOffset() {
         return this._legOffset;
-    }
-
-    get x() {
-        return this._x;
-    }
-
-    set x(value) {
-        this._x = value;
     }
 
     get speedX() {
@@ -116,44 +83,12 @@ export default class Player {
         this._speedX = value;
     }
 
-    get y() {
-        return this._y;
-    }
-
-    set y(value) {
-        this._y = value;
-    }
-
     get speedY() {
         return this._speedY;
     }
 
     set speedY(value) {
         this._speedY = value;
-    }
-
-    get left() {
-        return this._left;
-    }
-
-    get right() {
-        return this._right;
-    }
-
-    get top() {
-        return this._top;
-    }
-
-    get bottom() {
-        return this._bottom;
-    }
-
-    get width() {
-        return this._width;
-    }
-
-    get height() {
-        return this._height;
     }
 
     get isFreeFalling() {
@@ -186,6 +121,21 @@ export default class Player {
 
     set movingRight(value) {
         this._movingRight = value;
+    }
+
+    async build() {
+        const idleState = new SpriteState(this, {
+            name: "idle",
+            path: "/src/assets/images/goat-idle-128",
+            animates: true,
+            loops: true,
+            fixedLength: false,
+            stateDuration: null,
+            stateControlsMvmt: false,
+        });
+        await idleState.build();
+        this._stateMachine.addState("idle", idleState);
+        this.changeState("idle");
     }
 
     jump() {
@@ -236,33 +186,10 @@ export default class Player {
     }
 
     update() {
-        this._frame++;
+        super.update();
         this._updateMovementX();
         this._updateMovementY();
         this._updateHitbox();
         this._checkLose();
-    }
-
-    render() {
-        if (this._frame < 30) {
-            ctx.drawImage(sprite, this._x, this._y, this._width, this._height);
-        } else if (this._frame < 60) {
-            ctx.drawImage(
-                altSprite,
-                this._x,
-                this._y,
-                this._width,
-                this._height
-            );
-        } else {
-            ctx.drawImage(
-                altSprite,
-                this._x,
-                this._y,
-                this._width,
-                this._height
-            );
-            this._frame = 0;
-        }
     }
 }
