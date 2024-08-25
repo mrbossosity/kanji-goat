@@ -6,13 +6,15 @@ export default class SpriteState {
         this._x = sprite.x;
         this._y = sprite.y;
         // stateInfo formatted as {
-        //     name: "",
-        //     path: "",
+        //     name: string,
+        //     path: string,
         //     animates: boolean,
         //     loops: boolean,
         //     fixedLength: boolean,
         //     stateDuration: int,
         //     stateControlsMvmt: boolean
+        //     exitState: string
+
         // }
         if (stateInfo) {
             this._name = stateInfo.name;
@@ -23,6 +25,8 @@ export default class SpriteState {
             this._fixedLength = stateInfo.fixedLength; // true if state exits after a finite period
             this._stateDuration = stateInfo.stateDuration; // finite state length (in frames)
             this._stateControlsMvmt = stateInfo.stateControlsMvmt;
+            this._exitState = stateInfo.exitState;
+            this._renders = stateInfo.renders;
         }
 
         this._frames;
@@ -62,6 +66,8 @@ export default class SpriteState {
         console.log(
             `${this._sprite.name} entering spriteState named ${this._name}`
         );
+
+        if (this._renders) this._sprite.canRender = true;
     }
 
     update() {
@@ -71,13 +77,14 @@ export default class SpriteState {
         }
         // Check if fixed length state has ended
         if (this._fixedLength) {
-            if (this._stateTimer == this._stateDuration) {
-                console.log(
-                    `${this._sprite.name}'s fixed state named ${this._name} has ended.`
-                );
+            if (this._stateTimer >= this._stateDuration) {
                 this._stateTimer = 0;
-                // TOOD: exit state
-                this.exit();
+                if (this._exitState) {
+                    console.log(
+                        `${this._sprite.name} exiting state named ${this._name} and entering ${this._exitState}`
+                    );
+                    this._sprite.changeState(this._exitState);
+                }
                 return;
             } else {
                 this._stateTimer++;
@@ -93,15 +100,15 @@ export default class SpriteState {
 
                 // If on last frame, loop OR end animation and exit state
                 if (this._frameNum == this._framesMap.length) {
-                    if (this._loops) {
-                        this._frameNum = 0;
-                        this._frameTimer = 0;
-                    } else {
-                        console.log(
-                            `${this._sprite.name}'s animated state named ${this._name} has ended.`
-                        );
-                        // TODO: exit state
-                        this.exit();
+                    this._frameNum = 0;
+                    this._frameTimer = 0;
+                    if (!this._loops) {
+                        if (this._exitState) {
+                            console.log(
+                                `${this._sprite.name} exiting state named ${this._name} and entering ${this._exitState}`
+                            );
+                            this._sprite.changeState(this._exitState);
+                        }
                         return;
                     }
                 }
@@ -123,7 +130,8 @@ export default class SpriteState {
     }
 
     exit() {
-        console.log(`${this._sprite.name} exiting state named ${this._name}`);
-        // this._sprite.changeState("", {});
+        this._frameNum = 0;
+        this._frameTimer = 0;
+        this._stateTimer = 0;
     }
 }

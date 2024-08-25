@@ -33,6 +33,7 @@ export default class TextSprite extends Sprite {
     }
 
     async build() {
+        super.build();
         // Load font
         const font = new FontFace(this._fontName, this._fontURL);
         document.fonts.add(font);
@@ -40,6 +41,7 @@ export default class TextSprite extends Sprite {
     }
 
     render() {
+        // super.render();
         if (this._subColor) {
             ctx.font = `${this._fontSize}px ${this._fontName}`;
             ctx.textAlign = this._textAlign;

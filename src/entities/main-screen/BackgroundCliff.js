@@ -1,4 +1,5 @@
 import { CANVAS_HEIGHT, ctx } from "../../functions/index.js";
+import Sprite from "../Sprite.js";
 
 const sprite = new Image();
 sprite.src = "/src/assets/images/background-cliff-512.png";
@@ -6,8 +7,9 @@ sprite.src = "/src/assets/images/background-cliff-512.png";
 const sprite2 = new Image();
 sprite2.src = "/src/assets/images/background-cliff-alt-512.png";
 
-export default class BackgroundCliff {
-    constructor(gameState, x1, y1, x2, y2, width, height, globalJump) {
+export default class BackgroundCliff extends Sprite {
+    constructor(name, gameState, x1, y1, x2, y2, width, height, globalJump) {
+        super(name, gameState);
         this._x1 = x1;
         this._y1 = y1;
         this._x2 = x2;

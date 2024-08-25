@@ -14,6 +14,7 @@ export default class StateMachine {
     }
 
     changeState(name, params) {
+        if (this._currentState == this._states[name]) return; // Don't change if already current
         if (this._states[name]) {
             if (this._currentState) this._currentState.exit();
             this._currentState = this._states[name];

@@ -5,7 +5,7 @@ export const canvas = document.getElementById("game-canvas");
 export const ctx = canvas.getContext("2d");
 export const CANVAS_WIDTH = canvas.width;
 export const CANVAS_HEIGHT = canvas.height;
-export const GLOBAL_FPS = 60;
+export const GLOBAL_FPS = 61;
 export const GLOBAL_MS = Math.round(1000 / GLOBAL_FPS);
 
 async function launchGame() {

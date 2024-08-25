@@ -8,6 +8,8 @@ export default class PlayButton extends Sprite {
     }
 
     async build() {
+        super.build();
+
         const defaultState = new PlayButtonDefault(
             this,
             {

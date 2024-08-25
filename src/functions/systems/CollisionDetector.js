@@ -33,7 +33,7 @@ export default class CollisionDetector {
             }
 
             // Final check: ignore if object is not accepting collisions
-            if (!obj.acceptingCollisions) {
+            if (!obj.acceptingCollisions && obj.name !== "Carrot") {
                 this._player.fall();
                 obj.collision = false;
                 continue;
@@ -44,10 +44,15 @@ export default class CollisionDetector {
                 this._player.bottom >= obj.top &&
                 this._player.bottom <= obj.bottom + this._player.speedY
             ) {
-                this._player.land(obj);
-                obj.awardPoints();
-                obj.collision = true;
-                break;
+                if (obj.name == "Carrot") {
+                    console.log("null carrot");
+                    obj.changeState("null");
+                } else {
+                    this._player.land(obj);
+                    obj.registerLanding();
+                    obj.collision = true;
+                    break;
+                }
             }
         }
     }

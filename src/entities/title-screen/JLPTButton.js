@@ -19,6 +19,8 @@ export default class JLPTButtonSprite extends Sprite {
     }
 
     async build() {
+        super.build();
+
         const defaultState = new JLPTButtonDefault(this, {
             name: "default",
             path: this._defaultSpritePath,

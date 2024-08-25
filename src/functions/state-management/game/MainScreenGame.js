@@ -1,45 +1,22 @@
 import BackgroundCliff from "../../../entities/main-screen/BackgroundCliff.js";
 import Player from "../../../entities/main-screen/Player.js";
 import ScoreText from "../../../entities/main-screen/ScoreText.js";
-import StaticImage from "../../../entities/StaticImage.js";
+import StaticImage from "../../../entities/StaticSprite.js";
 import CollisionDetector from "../../systems/CollisionDetector.js";
 import DBLoader from "../../db-loader.js";
 import GlobalJump from "../../systems/GlobalJump.js";
 import GravityEnvironment from "../../systems/GravityEnvironment.js";
 import GameState from "./GameState.js";
 import CliffPlatform from "../../../entities/main-screen/CliffPlatform.js";
+import Carrot from "../../../entities/main-screen/Carrot.js";
 
 export default class MainScreenGame extends GameState {
     constructor(game) {
         super(game);
-        this._backgroundSky;
-        this._backgroundCliff;
-        this._cliff1;
-        this._cliff2;
-        this._scoreText;
-        this._player;
-        this._gravity;
-        this._globalJump;
-
-        this._dbLoader;
-    }
-
-    resetGame() {
-        this._player.reset();
-        this._backgroundCliff.reset();
-        this._cliff1.init();
-        this._cliff2.initAlt();
-        this._scoreText.reset();
-        this._globalJump.reset();
-    }
-
-    async build() {
-        // Construct systems
         this._gravity = new GravityEnvironment(1.3);
         this._collisionDetector = new CollisionDetector();
         this._globalJump = new GlobalJump();
 
-        // Construct entities
         this._backgroundSky = new StaticImage(
             "Background Sky",
             this,
@@ -49,9 +26,8 @@ export default class MainScreenGame extends GameState {
             512,
             "/src/assets/images/sky-512.png"
         );
-        await this._backgroundSky.build();
-
         this._backgroundCliff = new BackgroundCliff(
+            "Background Cliff",
             this,
             0,
             0,
@@ -61,7 +37,6 @@ export default class MainScreenGame extends GameState {
             512,
             this._globalJump
         );
-
         this._scoreText = new ScoreText(
             "Score Text",
             this,
@@ -77,25 +52,20 @@ export default class MainScreenGame extends GameState {
             2,
             4
         );
-        await this._scoreText.build();
 
-        // this._cliffGenerator = new CliffGenerator(
-        //     128,
-        //     64,
-        //     384,
-        //     this._scoreText,
-        //     this._collisionDetector,
-        //     this._globalJump
-        // );
         const cliffWidth = 128;
         const cliffHeight = 64;
         const cliffGap = 384;
 
         this._cliff1 = new CliffPlatform(
+            "Cliff Platform 1",
+            this,
             128 + cliffWidth / 2,
             512 - cliffHeight,
             cliffWidth,
             cliffHeight,
+            0,
+            0,
             cliffGap,
             this._scoreText,
             this._collisionDetector,
@@ -105,16 +75,34 @@ export default class MainScreenGame extends GameState {
 
         let randomX = Math.floor(Math.random() * (512 - cliffWidth + 1));
         this._cliff2 = new CliffPlatform(
+            "Cliff Platform 2",
+            this,
             randomX,
             512 - cliffHeight - cliffGap,
             cliffWidth,
             cliffHeight,
+            0,
+            0,
             cliffGap,
             this._scoreText,
             this._collisionDetector,
             this._globalJump,
             false
         );
+
+        this._carrot = new Carrot(
+            "Carrot",
+            this,
+            this._x + 31,
+            this._y - 54,
+            64,
+            32,
+            0,
+            0,
+            this._cliff2,
+            this._collisionDetector
+        );
+        this._cliff2.carrot = this._carrot;
 
         this._player = new Player(
             "Player",
@@ -131,23 +119,7 @@ export default class MainScreenGame extends GameState {
             this._collisionDetector,
             this._globalJump
         );
-        await this._player.build();
 
-        this._updater.addEntity(this._backgroundCliff);
-        this._updater.addEntity(this._cliff1);
-        this._updater.addEntity(this._cliff2);
-        this._updater.addEntity(this._player);
-        this._updater.addEntity(this._gravity);
-        this._updater.addEntity(this._collisionDetector);
-
-        this._animator.addEntity(this._backgroundSky);
-        this._animator.addEntity(this._backgroundCliff);
-        this._animator.addEntity(this._cliff1);
-        this._animator.addEntity(this._cliff2);
-        this._animator.addEntity(this._player);
-        this._animator.addEntity(this._scoreText);
-
-        // Load text/fonts/db
         this._dbLoader = new DBLoader([
             {
                 name: "N5",
@@ -170,6 +142,33 @@ export default class MainScreenGame extends GameState {
                 path: "/src/assets/jlpt-db/n1.json",
             },
         ]);
+    }
+
+    // Public
+    resetGame() {
+        this._player.reset();
+        this._backgroundCliff.reset();
+        this._cliff1.init();
+        this._cliff2.initAlt();
+        this._scoreText.reset();
+        this._globalJump.reset();
+    }
+
+    async build() {
+        // Construct systems
+        this.addToUpdater(this._gravity);
+        this.addToUpdater(this._collisionDetector);
+
+        // Construct entities
+        await this._backgroundSky.build();
+        await this._backgroundCliff.build();
+        await this._cliff1.build();
+        await this._cliff2.build();
+        await this._carrot.build();
+        await this._player.build();
+        await this._scoreText.build();
+
+        // Load text/fonts/db
         await this._dbLoader.load();
     }
 

@@ -5,7 +5,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 64 },
     "sourceSize": { "w": 128, "h": 64 },
-    "duration": 1000
+    "duration": 2000
    },
    "cliff-platform-128-64 1.png": {
     "frame": { "x": 128, "y": 0, "w": 128, "h": 64 },
@@ -13,7 +13,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 64 },
     "sourceSize": { "w": 128, "h": 64 },
-    "duration": 1000
+    "duration": 2000
    },
    "cliff-platform-128-64 2.png": {
     "frame": { "x": 256, "y": 0, "w": 128, "h": 64 },
@@ -45,7 +45,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 64 },
     "sourceSize": { "w": 128, "h": 64 },
-    "duration": 0
+    "duration": 20
    }
  },
  "meta": {

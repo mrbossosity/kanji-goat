@@ -30,6 +30,7 @@ export default class Sprite extends StatefulBase {
         this._top = this._y + this._hitboxOffsetY;
         this._bottom = this._y + this._height - this._hitboxOffsetY;
 
+        this._canRender = true; // true by default
         this._renderSpecs; // communicated from current sprite state each frame
     }
 
@@ -41,7 +42,7 @@ export default class Sprite extends StatefulBase {
         this._bottom = this._y + this._height;
     }
 
-    //Public
+    // Public
     get name() {
         return this._name;
     }
@@ -94,12 +95,29 @@ export default class Sprite extends StatefulBase {
         return this._bottom;
     }
 
+    get hitbox() {
+        return {
+            left: this._left,
+            right: this._right,
+            top: this._top,
+            bottom: this._bottom,
+        };
+    }
+
     get gameState() {
         return this._gameState;
     }
 
     get stateMachine() {
         return this._stateMachine;
+    }
+
+    get canRender() {
+        return this._canRender;
+    }
+
+    set canRender(boolean) {
+        this._canRender = boolean;
     }
 
     get renderSpecs() {
@@ -110,7 +128,14 @@ export default class Sprite extends StatefulBase {
         this._renderSpecs = value;
     }
 
-    async build() {}
+    async build() {
+        this._gameState.addToUpdater(this);
+        this._gameState.addToAnimator(this);
+    }
+
+    addState(name, state) {
+        this._stateMachine.addState(name, state);
+    }
 
     changeState(name, params) {
         this._stateMachine.changeState(name, params);
@@ -122,6 +147,7 @@ export default class Sprite extends StatefulBase {
 
     render() {
         if (!this._renderSpecs) return;
+        if (!this._canRender) return;
         ctx.drawImage(
             this._renderSpecs.a,
             this._renderSpecs.b,

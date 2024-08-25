@@ -51,10 +51,6 @@ export class OscillatingTextState extends SpriteState {
         this._deltaY = this._amplitude / this._period / 2;
     }
 
-    enter() {
-        super.enter();
-    }
-
     update() {
         if (this._frame == this._period) {
             this._frame = 0;
@@ -76,9 +72,5 @@ export class OscillatingTextState extends SpriteState {
         }
 
         this._frame++;
-    }
-
-    exit() {
-        super.exit();
     }
 }

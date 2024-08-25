@@ -124,6 +124,8 @@ export default class Player extends Sprite {
     }
 
     async build() {
+        super.build();
+
         const idleState = new SpriteState(this, {
             name: "idle",
             path: "/src/assets/images/goat-idle-128",

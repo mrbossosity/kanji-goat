@@ -1,54 +1,38 @@
-import { ctx, GLOBAL_MS } from "../../functions/index.js";
+import NullState from "../NullState.js";
+import Sprite from "../Sprite.js";
+import SpriteState from "../SpriteState.js";
+import Carrot from "./Carrot.js";
 
-// Default sprite
-const sprite = new Image();
-sprite.src = "/src/assets/images/cliff-platform-128-64.png";
-
-// Collapse animation spritesheet
-const collapseSprite = new Image();
-collapseSprite.src = "/src/assets/images/cliff-platform-collapse.png";
-const collapseMap = await fetch(
-    "/src/assets/images/cliff-platform-collapse.json"
-)
-    .then((response) => response.json())
-    .then((data) => {
-        let mappedSprite = Object.values(data.frames).map((frame, index) => {
-            return {
-                x: frame.frame.x,
-                y: frame.frame.y,
-                w: frame.frame.w,
-                h: frame.frame.h,
-                duration: frame.duration,
-                index: index,
-            };
-        });
-        return mappedSprite;
-    });
-
-export default class CliffPlatform {
+export default class CliffPlatform extends Sprite {
     constructor(
+        name,
+        gameState,
         x,
         y,
         width,
         height,
+        hitboxOffsetX,
+        hitboxOffsetY,
         gap,
         scoreText,
         collisionDetector,
         globalJump,
         pointsAwarded
     ) {
-        this._x = x;
-        this._y = y;
-        this._width = width;
-        this._height = height;
+        super(
+            name,
+            gameState,
+            x,
+            y,
+            width,
+            height,
+            hitboxOffsetX,
+            hitboxOffsetY
+        );
+
         this._gap = gap;
         this._speedY = 0;
 
-        // Hitbox markers
-        this._left = this._x;
-        this._right = this._x + this._width;
-        this._top = this._y;
-        this._bottom = this._y + this._height;
         this._acceptingCollisions = true;
         this._collision = false;
 
@@ -59,19 +43,13 @@ export default class CliffPlatform {
         this._jumpFrame = 0;
         this._delta = 0;
 
-        // Collapse animation
-        this._isCollapsing = false;
-        this._collapseTimeout = 60; // (60 fps = 1 second)
-        this._collapseTimeoutFrame = 0;
-        this._collapseTimer = 0;
-        this._collapseFrame = 0;
-        this._doNotDraw = false;
-
         // Points
         this._pointsAwarded = pointsAwarded;
         this._scoreText = scoreText;
 
-        // globalUpdate.addEntity(this);
+        // Carrot
+        this._carrot;
+
         globalJump.addEntity(this);
         collisionDetector.addEntity(this);
     }
@@ -85,11 +63,6 @@ export default class CliffPlatform {
         // Collision detection
         this._acceptingCollisions = true;
         this._collision = false;
-        // Reset collapse animation
-        this._isCollapsing = false;
-        this._collapseTimeoutFrame = 0;
-        this._collapseFrame = 0;
-        this._doNotDraw = false;
         this._pointsAwarded = false;
     }
 
@@ -101,12 +74,16 @@ export default class CliffPlatform {
         // Reset collision detection
         this._acceptingCollisions = true;
         this._collision = false;
-        // Reset collapse animation
-        this._isCollapsing = false;
-        this._collapseTimeoutFrame = 0;
-        this._collapseFrame = 0;
-        this._doNotDraw = false;
         this._pointsAwarded = false;
+
+        // Add back into animator in idle state
+        this._canRender = true;
+        this.changeState("idle");
+
+        // Respawn carrot
+        if (this._carrot) {
+            this._carrot.changeState("default");
+        }
     }
 
     _updateJump() {
@@ -126,63 +103,12 @@ export default class CliffPlatform {
         }
     }
 
-    _updateHitbox() {
-        this._left = this._x;
-        this._right = this._x + this._width;
-        this._top = this._y;
-        this._bottom = this._y + this._height;
-    }
-
-    _updateCollapse() {
-        // Handle collapse timeout (frames prior to collapse animation)
-        if (!this._isCollapsing) {
-            this._collapseTimeoutFrame++;
-            if (this._collapseTimeoutFrame == this._collapseTimeout) {
-                this._isCollapsing = true;
-                this._collapseTimeoutFrame = 0;
-            }
-            return;
-        }
-
-        // If on last frame, end animation
-        if (this._collapseFrame + 1 == collapseMap.length) {
-            this._isCollapsing = false;
-            this._doNotDraw = true; // Don't render until sprite respawns
-            this._acceptingCollisions = false; // Cause player to fall
-            return;
-        }
-
-        // Else, advance timer and animation frame
-        this._collapseTimer += GLOBAL_MS; // 16ms = 60fps
-        if (this._collapseTimer >= collapseMap[this._collapseFrame].duration) {
-            this._collapseFrame++;
-            this._collapseTimer = 0;
-        }
-    }
-
-    // Public
-    get x() {
-        return this._x;
-    }
-
-    set x(value) {
-        this._x = value;
-    }
-
     get speedX() {
         return this._speedX;
     }
 
     set speedX(value) {
         this._speedX = value;
-    }
-
-    get y() {
-        return this._y;
-    }
-
-    set y(value) {
-        this._y = value;
     }
 
     get speedY() {
@@ -193,32 +119,16 @@ export default class CliffPlatform {
         this._speedY = value;
     }
 
-    get height() {
-        return this._height;
-    }
-
-    get left() {
-        return this._left;
-    }
-
-    get right() {
-        return this._right;
-    }
-
-    get top() {
-        return this._top;
-    }
-
-    get bottom() {
-        return this._bottom;
-    }
-
     get delta() {
         return this._delta;
     }
 
     get acceptingCollisions() {
         return this._acceptingCollisions;
+    }
+
+    set acceptingCollisions(boolean) {
+        this._acceptingCollisions = boolean;
     }
 
     get collision() {
@@ -229,11 +139,62 @@ export default class CliffPlatform {
         this._collision = value;
     }
 
+    get carrot() {
+        return this._carrot;
+    }
+
+    set carrot(carrot) {
+        this._carrot = carrot;
+    }
+
+    async build() {
+        super.build();
+
+        const idleState = new SpriteState(this, {
+            name: "idle",
+            path: "/src/assets/images/cliff-platform-128-64",
+            animates: false,
+            loops: false,
+            fixedLength: false,
+            stateDuration: null,
+            stateControlsMvmt: false,
+            exitState: "collapsing",
+            renders: true,
+        });
+        await idleState.build();
+        this._stateMachine.addState("idle", idleState);
+
+        const collapsingState = new SpriteState(this, {
+            name: "collapsing",
+            path: "/src/assets/images/cliff-platform-collapse-128-64",
+            animates: true,
+            loops: false,
+            fixedLength: false,
+            stateDuration: null,
+            stateControlsMvmt: false,
+            exitState: "null",
+            renders: true,
+        });
+        await collapsingState.build();
+        this._stateMachine.addState("collapsing", collapsingState);
+
+        const nullState = new NullState(this);
+        this.addState("null", nullState);
+
+        this.changeState("idle");
+    }
+
     init() {
         this._x = 128 + this._width / 2;
         this._y = 512 - this._height;
         this._resetVariables();
         this._pointsAwarded = true;
+
+        this.changeState("idle");
+
+        if (this._carrot) {
+            this._carrot.changeState("default");
+        }
     }
 
     initAlt() {
@@ -241,12 +202,24 @@ export default class CliffPlatform {
         this._x = randomX;
         this._y = 512 - this._height - this._gap;
         this._resetVariables();
+
+        this.changeState("idle");
+
+        if (this._carrot) {
+            this._carrot.changeState("default");
+        }
     }
 
-    awardPoints() {
+    registerLanding() {
         if (!this._pointsAwarded) {
             this._scoreText.addPoints(10);
             this._pointsAwarded = true;
+        }
+        this.changeState("collapsing");
+
+        // // Carrot
+        if (this._carrot) {
+            this._carrot.changeState("null");
         }
     }
 
@@ -258,27 +231,8 @@ export default class CliffPlatform {
     }
 
     update() {
+        super.update();
         this._updateJump();
         this._updateHitbox();
-        if (this._collision) this._updateCollapse();
-    }
-
-    render() {
-        if (this._doNotDraw) return;
-        if (this._isCollapsing) {
-            ctx.drawImage(
-                collapseSprite,
-                collapseMap[this._collapseFrame].x,
-                collapseMap[this._collapseFrame].y,
-                collapseMap[this._collapseFrame].w,
-                collapseMap[this._collapseFrame].h,
-                this._x,
-                this._y,
-                collapseMap[this._collapseFrame].w,
-                collapseMap[this._collapseFrame].h
-            );
-        } else {
-            ctx.drawImage(sprite, this._x, this._y, this._width, this._height);
-        }
     }
 }

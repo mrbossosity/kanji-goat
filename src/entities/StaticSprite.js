@@ -1,16 +1,11 @@
 import { ctx } from "../functions/index.js";
+import Sprite from "./Sprite.js";
 
-export default class StaticImage {
+export default class StaticSprite extends Sprite {
     constructor(name, gameState, x, y, width, height, path) {
-        this._name = name;
-        this._gameState = gameState;
-        this._x = x;
-        this._y = y;
-        this._width = width;
-        this._height = height;
+        super(name, gameState, x, y, width, height);
         this._path = path;
-
-        this._sprite;
+        this._image;
     }
 
     get name() {
@@ -50,17 +45,13 @@ export default class StaticImage {
     }
 
     async build() {
-        this._sprite = new Image();
-        this._sprite.src = this._path;
+        super.build();
+
+        this._image = new Image();
+        this._image.src = this._path;
     }
 
     render() {
-        ctx.drawImage(
-            this._sprite,
-            this._x,
-            this._y,
-            this._width,
-            this._height
-        );
+        ctx.drawImage(this._image, this._x, this._y, this._width, this._height);
     }
 }

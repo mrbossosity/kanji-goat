@@ -20,6 +20,14 @@ export default class GameState {
         return this._animator;
     }
 
+    addToUpdater(entity) {
+        this._updater.addEntity(entity);
+    }
+
+    addToAnimator(entity) {
+        this._animator.addEntity(entity);
+    }
+
     async build() {}
 
     enter() {}
