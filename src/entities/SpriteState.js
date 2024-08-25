@@ -14,6 +14,8 @@ export default class SpriteState {
         //     stateDuration: int,
         //     stateControlsMvmt: boolean
         //     exitState: string
+        //     renders: boolean
+        //     acceptingCollisions: boolean
 
         // }
         if (stateInfo) {
@@ -27,6 +29,7 @@ export default class SpriteState {
             this._stateControlsMvmt = stateInfo.stateControlsMvmt;
             this._exitState = stateInfo.exitState;
             this._renders = stateInfo.renders;
+            this._acceptingCollisions = stateInfo.acceptingCollisions;
         }
 
         this._frames;
@@ -63,10 +66,11 @@ export default class SpriteState {
     }
 
     enter() {
-        console.log(
-            `${this._sprite.name} entering spriteState named ${this._name}`
-        );
+        // console.log(
+        //     `${this._sprite.name} entering spriteState named ${this._name}`
+        // );
 
+        if (this._acceptingCollisions) this._sprite.acceptingCollisions = true;
         if (this._renders) this._sprite.canRender = true;
     }
 
@@ -104,9 +108,9 @@ export default class SpriteState {
                     this._frameTimer = 0;
                     if (!this._loops) {
                         if (this._exitState) {
-                            console.log(
-                                `${this._sprite.name} exiting state named ${this._name} and entering ${this._exitState}`
-                            );
+                            // console.log(
+                            //     `${this._sprite.name} exiting state named ${this._name} and entering ${this._exitState}`
+                            // );
                             this._sprite.changeState(this._exitState);
                         }
                         return;

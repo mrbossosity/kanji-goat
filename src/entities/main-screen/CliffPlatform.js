@@ -1,7 +1,6 @@
 import NullState from "../NullState.js";
 import Sprite from "../Sprite.js";
 import SpriteState from "../SpriteState.js";
-import Carrot from "./Carrot.js";
 
 export default class CliffPlatform extends Sprite {
     constructor(
@@ -72,12 +71,12 @@ export default class CliffPlatform extends Sprite {
         this._x = randomX;
         this._y = this._top - this._gap * 2 + this._delta;
         // Reset collision detection
-        this._acceptingCollisions = true;
+        // this._acceptingCollisions = true;
         this._collision = false;
         this._pointsAwarded = false;
 
         // Add back into animator in idle state
-        this._canRender = true;
+        // this._canRender = true;
         this.changeState("idle");
 
         // Respawn carrot
@@ -160,6 +159,7 @@ export default class CliffPlatform extends Sprite {
             stateControlsMvmt: false,
             exitState: "collapsing",
             renders: true,
+            acceptingCollisions: true,
         });
         await idleState.build();
         this._stateMachine.addState("idle", idleState);
@@ -215,12 +215,8 @@ export default class CliffPlatform extends Sprite {
             this._scoreText.addPoints(10);
             this._pointsAwarded = true;
         }
+        this._collision = true;
         this.changeState("collapsing");
-
-        // // Carrot
-        if (this._carrot) {
-            this._carrot.changeState("null");
-        }
     }
 
     jump(jumpDistance, jumpFrameCount) {

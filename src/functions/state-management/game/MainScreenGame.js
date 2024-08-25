@@ -14,8 +14,8 @@ export default class MainScreenGame extends GameState {
     constructor(game) {
         super(game);
         this._gravity = new GravityEnvironment(1.3);
-        this._collisionDetector = new CollisionDetector();
-        this._globalJump = new GlobalJump();
+        this._collisionDetector = new CollisionDetector(this);
+        this._globalJump = new GlobalJump(this);
 
         this._backgroundSky = new StaticImage(
             "Background Sky",
@@ -94,9 +94,9 @@ export default class MainScreenGame extends GameState {
             "Carrot",
             this,
             this._x + 31,
-            this._y - 54,
+            this._y - 64,
             64,
-            32,
+            64,
             0,
             0,
             this._cliff2,
@@ -145,6 +145,10 @@ export default class MainScreenGame extends GameState {
     }
 
     // Public
+    get scoreText() {
+        return this._scoreText;
+    }
+
     resetGame() {
         this._player.reset();
         this._backgroundCliff.reset();
@@ -158,6 +162,7 @@ export default class MainScreenGame extends GameState {
         // Construct systems
         this.addToUpdater(this._gravity);
         this.addToUpdater(this._collisionDetector);
+        // this.addToUpdater(this._globalJump);
 
         // Construct entities
         await this._backgroundSky.build();

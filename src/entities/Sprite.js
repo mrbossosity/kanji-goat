@@ -112,6 +112,10 @@ export default class Sprite extends StatefulBase {
         return this._stateMachine;
     }
 
+    get currentState() {
+        return this._stateMachine.currentState;
+    }
+
     get canRender() {
         return this._canRender;
     }

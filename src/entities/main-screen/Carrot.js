@@ -26,9 +26,19 @@ export default class Carrot extends Sprite {
             hitboxOffsetY
         );
 
+        this._acceptingCollisions;
         this._parentCliff = parentCliff;
         this._collisionDetector = collisionDetector;
+        this._collisionDetector.carrot = this;
         this._collisionDetector.addEntity(this);
+    }
+
+    get acceptingCollisions() {
+        return this._acceptingCollisions;
+    }
+
+    set acceptingCollisions(boolean) {
+        this._acceptingCollisions = boolean;
     }
 
     async build() {
@@ -43,6 +53,7 @@ export default class Carrot extends Sprite {
             stateDuration: null,
             stateControlsMvmt: false,
             renders: true,
+            acceptingCollisions: true,
         });
 
         await defaultState.build();

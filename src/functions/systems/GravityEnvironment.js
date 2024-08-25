@@ -19,7 +19,11 @@ export default class GravityEnvironment {
 
     update() {
         for (let entity of this._floatingEntities) {
-            if (!entity.isOnGround) entity.speedY -= this._force;
+            if (!entity.glued) {
+                // console.log("gravity");
+                entity.speedY -= this._force;
+                entity.fall();
+            }
         }
     }
 }

@@ -29,7 +29,6 @@ export default class Player extends Sprite {
         this._movingRight;
         this._isJumping = false;
         this._isFreeFalling = false;
-        this._isOnGround = false;
         this._glued = false;
         this._gluedObj;
 
@@ -52,12 +51,11 @@ export default class Player extends Sprite {
         this._y -= this._speedY;
 
         if (this._glued) {
-            this._y = this._gluedObj.y - this._height + this._gluedObj.delta;
+            this._y = this._gluedObj.y - this._height;
             return;
         }
 
         if (this.speedY < 0) {
-            this._isOnGround = false;
             this._isFreeFalling = true;
             this._isJumping = false;
         }
@@ -99,12 +97,20 @@ export default class Player extends Sprite {
         return this._isJumping;
     }
 
-    get isOnGround() {
-        return this._isOnGround;
+    get glued() {
+        return this._glued;
     }
 
-    set isOnGround(value) {
-        this._isOnGround = value;
+    set glued(boolean) {
+        this._glued = boolean;
+    }
+
+    get gluedObj() {
+        return this._gluedObj;
+    }
+
+    set gluedObj(obj) {
+        this._gluedObj = obj;
     }
 
     get movingLeft() {
@@ -142,27 +148,25 @@ export default class Player extends Sprite {
 
     jump() {
         this._glued = false;
-        if (!this._isJumping && !this._isFreeFalling) {
-            this._speedY = this._jumpSpeed;
-            this._isJumping = true;
-            this._globalJump.playerJumping = false;
-        }
-        this._isOnGround = false;
+        this._gluedObj = null;
+        this._speedY = this._jumpSpeed;
+        this._isJumping = true;
+        this._globalJump.playerJumping = true;
         this._updateMovementY();
     }
 
     fall() {
-        this._isOnGround = false;
         this._glued = false;
         this._gluedObj = null;
-        this._globalJump.playerJumping = true;
     }
 
     land(obj) {
+        if (this._glued) {
+            return;
+        }
         this._speedY = 0;
         this._isFreeFalling = false;
         this._isJumping = false;
-        this._isOnGround = true;
         this._glued = true;
         this._gluedObj = obj;
         this._globalJump.playerJumping = false;

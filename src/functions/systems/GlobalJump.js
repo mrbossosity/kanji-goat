@@ -1,8 +1,9 @@
 export default class GlobalJump {
-    constructor() {
+    constructor(gameState) {
+        this._gameState = gameState;
         this._objectsToJump = [];
         this._backgroundScrolling = false;
-        this._playerJumping = false;
+        this._playerJumping = true;
         this._isJumpingAllowed = true;
     }
 
@@ -41,6 +42,8 @@ export default class GlobalJump {
             this._isJumpingAllowed = true;
             return;
         }
+
+        console.log("jump");
 
         for (let obj of this._objectsToJump) {
             obj.jump(jumpDistance, jumpFrameCount);

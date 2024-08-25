@@ -4,6 +4,8 @@ export default class NullState {
     }
 
     enter() {
+        // console.log(`${this._sprite.name} entering null state`);
+
         this._sprite.acceptingCollisions = false;
         if (this._sprite.canRender) this._sprite.canRender = false;
     }
