@@ -1,10 +1,38 @@
 import { canvas } from "../../functions/index.js";
+import ButtonSprite from "../ButtonSprite.js";
 import OscillatingImageState from "../OscillatingImageState.js";
-import Sprite from "../Sprite.js";
 
-export default class PlayButton extends Sprite {
-    constructor(name, gameState, x, y, width, height) {
-        super(name, gameState, x, y, width, height);
+export default class PlayButton extends ButtonSprite {
+    constructor(
+        name,
+        gameState,
+        x,
+        y,
+        width,
+        height,
+        defaultSpritePath,
+        selectedSpritePath,
+        selectCallbackFn,
+        deselectCallbackFn,
+        soleCallbackFn
+    ) {
+        super(
+            name,
+            gameState,
+            x,
+            y,
+            width,
+            height,
+            defaultSpritePath,
+            selectedSpritePath,
+            selectCallbackFn,
+            deselectCallbackFn,
+            soleCallbackFn
+        );
+    }
+
+    click() {
+        this._soleCallbackFn(this._game);
     }
 
     async build() {
@@ -22,7 +50,8 @@ export default class PlayButton extends Sprite {
                 stateControlsMvmt: true,
             },
             40,
-            180
+            180,
+            this._soleCallbackFn
         );
         await defaultState.build();
         this._stateMachine.addState(defaultState.name, defaultState);
@@ -32,8 +61,9 @@ export default class PlayButton extends Sprite {
 }
 
 class PlayButtonDefault extends OscillatingImageState {
-    constructor(sprite, stateInfo, amplitude, period) {
+    constructor(sprite, stateInfo, amplitude, period, soleCallbackFn) {
         super(sprite, stateInfo, amplitude, period);
+        this._soleCallbackFn = soleCallbackFn;
     }
 
     // Private
@@ -47,7 +77,7 @@ class PlayButtonDefault extends OscillatingImageState {
             clickY >= this._sprite.y &&
             clickY <= this._sprite.y + this._sprite.height
         ) {
-            this._sprite.gameState.game.changeState("main-screen");
+            this._soleCallbackFn(this._sprite.game);
         }
     }
 

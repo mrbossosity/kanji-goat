@@ -1,10 +1,21 @@
 export class ControlState {
     constructor(controls) {
         this._controls = controls;
-        this._controllables;
+        this._gameState;
     }
 
-    enter() {}
+    _keydownEvents(e) {}
+    _keyupEvents(e) {}
+
+    enter(params) {
+        this._gameState = params.gameState;
+        this._gameState.controlState = this;
+        document.addEventListener("keydown", (e) => this._keydownEvents(e));
+        document.addEventListener("keyup", (e) => this._keyupEvents(e));
+    }
     update() {}
-    exit() {}
+    exit() {
+        document.removeEventListener("keydown", (e) => this._keydownEvents);
+        document.removeEventListener("keyup", (e) => this._keyupEvents);
+    }
 }

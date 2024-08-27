@@ -15,6 +15,10 @@ async function launchGame() {
 
     game.gameloop(0);
     game.changeState("title-screen");
+
+    window.setTimeout(() => {
+        document.getElementById("answer-input").focus();
+    }, 0);
 }
 
 window.addEventListener("load", (e) => {

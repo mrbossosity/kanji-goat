@@ -27,10 +27,13 @@ export default class Carrot extends Sprite {
         );
 
         this._acceptingCollisions;
-        this._parentCliff = parentCliff;
         this._collisionDetector = collisionDetector;
         this._collisionDetector.carrot = this;
         this._collisionDetector.addEntity(this);
+
+        this._parentCliff = parentCliff;
+        this._bigCarrot;
+        this._carrotText;
     }
 
     get acceptingCollisions() {
@@ -39,6 +42,27 @@ export default class Carrot extends Sprite {
 
     set acceptingCollisions(boolean) {
         this._acceptingCollisions = boolean;
+    }
+
+    get bigCarrot() {
+        return this._bigCarrot;
+    }
+
+    set bigCarrot(carrotSprite) {
+        this._bigCarrot = carrotSprite;
+    }
+
+    get carrotText() {
+        return this._carrotText;
+    }
+
+    set carrotText(carrotSprite) {
+        this._carrotText = carrotSprite;
+    }
+
+    carrotCollision() {
+        this._gameState.kanjiQuiz();
+        this.changeState("null");
     }
 
     async build() {

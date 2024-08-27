@@ -32,6 +32,14 @@ export default class TextSprite extends Sprite {
         }
     }
 
+    get text() {
+        return this._text;
+    }
+
+    set text(string) {
+        this._text = string;
+    }
+
     async build() {
         super.build();
         // Load font
@@ -42,8 +50,9 @@ export default class TextSprite extends Sprite {
 
     render() {
         // super.render();
+        if (!this._canRender) return;
+        ctx.font = `${this._fontSize}px ${this._fontName}`;
         if (this._subColor) {
-            ctx.font = `${this._fontSize}px ${this._fontName}`;
             ctx.textAlign = this._textAlign;
             ctx.fillStyle = this._subColor;
             ctx.fillText(

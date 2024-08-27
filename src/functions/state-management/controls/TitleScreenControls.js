@@ -7,16 +7,16 @@ export default class TitleScreenControls extends ControlState {
 
     _keydownEvents(e) {
         if (e.key === "Enter") {
+            this._gameState.playButton.click();
             this._controls.game.changeState("main-screen");
         }
     }
 
-    enter(controllables) {
-        this._controllables = controllables;
-        document.addEventListener("keydown", (e) => this._keydownEvents(e));
+    enter(params) {
+        super.enter(params);
     }
 
     exit() {
-        document.removeEventListener("keydown", (e) => this._keydownEvents);
+        super.exit();
     }
 }

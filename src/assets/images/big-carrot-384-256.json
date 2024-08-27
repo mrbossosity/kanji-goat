@@ -1,0 +1,25 @@
+{ "frames": {
+   "expanding-carrot-384-256.ase": {
+    "frame": { "x": 0, "y": 0, "w": 384, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 256 },
+    "sourceSize": { "w": 384, "h": 256 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://github.com/LibreSprite/LibreSprite/",
+  "version": "1.2-973d0e3d-SDL",
+  "image": "C:\\Users\\sagek\\Documents\\LibreSprite\\Kanji Goat\\exported-assets\\big-carrot-384-256.png",
+  "format": "RGBA8888",
+  "size": { "w": 384, "h": 256 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Tag", "from": 0, "to": 0, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ]
+ }
+}

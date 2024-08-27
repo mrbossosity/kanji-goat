@@ -4,7 +4,7 @@ export default class GlobalJump {
         this._objectsToJump = [];
         this._backgroundScrolling = false;
         this._playerJumping = true;
-        this._isJumpingAllowed = true;
+        this._jumpThrottler = true;
     }
 
     // Public
@@ -12,22 +12,22 @@ export default class GlobalJump {
         return this._backgroundScrolling;
     }
 
-    set backgroundScrolling(value) {
-        this._backgroundScrolling = value;
+    set backgroundScrolling(boolean) {
+        this._backgroundScrolling = boolean;
     }
 
     get playerJumping() {
         return this._playerJumping;
     }
 
-    set playerJumping(value) {
-        this._playerJumping = value;
+    set playerJumping(boolean) {
+        this._playerJumping = boolean;
     }
 
     reset() {
         this._backgroundScrolling = false;
         this._playerJumping = false;
-        this._isJumpingAllowed = true;
+        this._jumpThrottler = true;
     }
 
     addEntity(entity) {
@@ -35,19 +35,17 @@ export default class GlobalJump {
     }
 
     jump(jumpDistance, jumpFrameCount) {
-        if (!this._isJumpingAllowed) return;
-        this._isJumpingAllowed = false;
+        if (!this._jumpThrottler) return;
+        this._jumpThrottler = false;
 
         if (this._backgroundScrolling || this._playerJumping) {
-            this._isJumpingAllowed = true;
+            this._jumpThrottler = true;
             return;
         }
-
-        console.log("jump");
 
         for (let obj of this._objectsToJump) {
             obj.jump(jumpDistance, jumpFrameCount);
         }
-        this._isJumpingAllowed = true;
+        this._jumpThrottler = true;
     }
 }

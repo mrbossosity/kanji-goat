@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <script src="https://unpkg.com/wanakana"></script>
     <script defer type="module" src="src/functions/index.js"></script>
     <title>Kanji Goat</title>
 </head>
 <body>
     <canvas id="game-canvas" width="512" height="512"></canvas>
+    <input autofocus tabindex="1" type="text" name="answer-input" id="answer-input" onfocus="this.value=''" onblur="this.focus();">
 </body>
 </html>

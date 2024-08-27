@@ -15,6 +15,7 @@ export default class Sprite extends StatefulBase {
         super();
         this._name = name;
         this._gameState = gameState;
+        this._game = gameState.game;
         this._x = x;
         this._y = y;
         this._initX = x;
@@ -45,6 +46,10 @@ export default class Sprite extends StatefulBase {
     // Public
     get name() {
         return this._name;
+    }
+
+    get game() {
+        return this._game;
     }
 
     get x() {

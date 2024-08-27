@@ -1,7 +1,7 @@
 import { GLOBAL_MS } from "../functions/index.js";
 
 export default class SpriteState {
-    constructor(sprite, stateInfo) {
+    constructor(sprite, stateInfo, callbackFn) {
         this._sprite = sprite;
         this._x = sprite.x;
         this._y = sprite.y;
@@ -37,6 +37,8 @@ export default class SpriteState {
         this._frameNum = 0;
         this._frameTimer = 0;
         this._stateTimer = 0;
+
+        this._callbackFn = callbackFn; // Passed if additional tasks need to be performed upon state entry
     }
 
     get name() {
@@ -72,6 +74,10 @@ export default class SpriteState {
 
         if (this._acceptingCollisions) this._sprite.acceptingCollisions = true;
         if (this._renders) this._sprite.canRender = true;
+
+        if (this._callbackFn) {
+            this._callbackFn();
+        }
     }
 
     update() {

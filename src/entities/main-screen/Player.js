@@ -63,7 +63,6 @@ export default class Player extends Sprite {
 
     _checkLose() {
         if (this._y > CANVAS_HEIGHT) {
-            alert("Game Over!");
             this._gameState.resetGame();
         }
     }

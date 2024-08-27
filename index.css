@@ -1,0 +1,10 @@
+body {
+    background-color: black;
+}
+
+#answer-input {
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0
+}

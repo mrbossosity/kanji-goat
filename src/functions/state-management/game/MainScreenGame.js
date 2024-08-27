@@ -3,16 +3,18 @@ import Player from "../../../entities/main-screen/Player.js";
 import ScoreText from "../../../entities/main-screen/ScoreText.js";
 import StaticImage from "../../../entities/StaticSprite.js";
 import CollisionDetector from "../../systems/CollisionDetector.js";
-import DBLoader from "../../db-loader.js";
 import GlobalJump from "../../systems/GlobalJump.js";
 import GravityEnvironment from "../../systems/GravityEnvironment.js";
 import GameState from "./GameState.js";
 import CliffPlatform from "../../../entities/main-screen/CliffPlatform.js";
 import Carrot from "../../../entities/main-screen/Carrot.js";
+import BigCarrot from "../../../entities/main-screen/BigCarrot.js";
+import TextSprite from "../../../entities/TextSprite.js";
 
 export default class MainScreenGame extends GameState {
     constructor(game) {
         super(game);
+        this._controlState;
         this._gravity = new GravityEnvironment(1.3);
         this._collisionDetector = new CollisionDetector(this);
         this._globalJump = new GlobalJump(this);
@@ -41,11 +43,11 @@ export default class MainScreenGame extends GameState {
             "Score Text",
             this,
             20,
-            45,
+            40,
             "Score: ",
             "Supply Text",
             "url(/src/assets/fonts/supply-center.ttf)",
-            25,
+            20,
             "left",
             "darkorange",
             "black",
@@ -120,49 +122,111 @@ export default class MainScreenGame extends GameState {
             this._globalJump
         );
 
-        this._dbLoader = new DBLoader([
-            {
-                name: "N5",
-                path: "/src/assets/jlpt-db/n5.json",
-            },
-            {
-                name: "N4",
-                path: "/src/assets/jlpt-db/n4.json",
-            },
-            {
-                name: "N3",
-                path: "/src/assets/jlpt-db/n3.json",
-            },
-            {
-                name: "N2",
-                path: "/src/assets/jlpt-db/n2.json",
-            },
-            {
-                name: "N1",
-                path: "/src/assets/jlpt-db/n1.json",
-            },
-        ]);
+        this._bigCarrot = new BigCarrot("Big Carrot", this, 64, 64, 384, 256);
+        this._carrot.bigCarrot = this._bigCarrot;
+
+        this._carrotText = new TextSprite(
+            "Carrot Text",
+            this,
+            265,
+            207,
+            "周り",
+            "Noto Sans JP",
+            "url(/src/assets/fonts/noto-sans-jp.ttf)",
+            33,
+            "center",
+            "black"
+        );
+        this._carrotText.canRender = false;
+        this._carrot.carrotText = this._carrotText;
+
+        this._answerText = new TextSprite(
+            "Answer Text",
+            this,
+            265,
+            325,
+            "周り",
+            "Noto Sans JP",
+            "url(/src/assets/fonts/noto-sans-jp.ttf)",
+            45,
+            "center",
+            "darkorange",
+            "black",
+            2,
+            3
+        );
+        this._answerText.canRender = false;
     }
 
     // Public
+    get player() {
+        return this._player;
+    }
+
     get scoreText() {
         return this._scoreText;
     }
 
+    get carrotText() {
+        return this._carrotText;
+    }
+
+    get answerText() {
+        return this._answerText;
+    }
+
+    get globalJump() {
+        return this._globalJump;
+    }
+
+    get controlState() {
+        return this._controlState;
+    }
+
+    set controlState(controlState) {
+        this._controlState = controlState;
+    }
+
+    kanjiQuiz() {
+        const term = this._game.kanjiManager.randomCard();
+        this._carrotText.text = term.word;
+        this._bigCarrot.changeState("expanding");
+        this._game.kanjiManager.input.value = "";
+        this._answerText.text = "";
+        this._controlState.carrotPhase = true;
+    }
+
+    checkAnswer() {
+        const userAnswer = this._game.kanjiManager.hiraganizedAnswer.trim();
+        if (userAnswer == this._game.kanjiManager.currentCard.furigana) {
+            this._bigCarrot.changeState("shrinking");
+            this._carrotText.canRender = false;
+            this._answerText.canRender = false;
+            this._controlState.carrotPhase = false;
+        } else {
+        }
+    }
+
     resetGame() {
+        const currentCard = this._game.kanjiManager.currentCard;
+        alert(
+            `Game Over! The correct reading of ${currentCard.word} is ${currentCard.furigana}, which means "${currentCard.meaning}"`
+        );
         this._player.reset();
         this._backgroundCliff.reset();
         this._cliff1.init();
         this._cliff2.initAlt();
         this._scoreText.reset();
         this._globalJump.reset();
+        this._bigCarrot.reset();
+        this._controlState.carrotPhase = false;
+        this._game.kanjiManager.input.value = "";
     }
 
     async build() {
         // Construct systems
         this.addToUpdater(this._gravity);
         this.addToUpdater(this._collisionDetector);
-        // this.addToUpdater(this._globalJump);
 
         // Construct entities
         await this._backgroundSky.build();
@@ -171,16 +235,15 @@ export default class MainScreenGame extends GameState {
         await this._cliff2.build();
         await this._carrot.build();
         await this._player.build();
+        await this._bigCarrot.build();
+        await this._carrotText.build();
+        await this._answerText.build();
         await this._scoreText.build();
-
-        // Load text/fonts/db
-        await this._dbLoader.load();
     }
 
     enter() {
         this._game.controls.changeState("main-screen", {
-            player: this._player,
-            globalJump: this._globalJump,
+            gameState: this,
         });
     }
 

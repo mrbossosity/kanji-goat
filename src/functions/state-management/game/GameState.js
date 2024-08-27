@@ -6,6 +6,7 @@ export default class GameState {
         this._game = game;
         this._updater = new Updater();
         this._animator = new Animator();
+        this._controls = game.controls;
     }
 
     // Public
@@ -18,6 +19,10 @@ export default class GameState {
 
     get animator() {
         return this._animator;
+    }
+
+    get controls() {
+        return this._controls;
     }
 
     addToUpdater(entity) {

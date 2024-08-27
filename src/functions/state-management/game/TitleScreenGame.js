@@ -53,7 +53,19 @@ export default class TitleScreenGame extends GameState {
             64,
             64,
             "/src/assets/images/n5-button-64",
-            "/src/assets/images/n5-button-selected-64"
+            "/src/assets/images/n5-button-selected-64",
+            () => {
+                if (this._n5Button.currentState.name == "default") {
+                    this._n5Button.changeState("selected");
+                    this._game.kanjiManager.addDeck("N5");
+                }
+            },
+            () => {
+                if (this._n5Button.currentState.name == "selected") {
+                    this._n5Button.changeState("default");
+                    this._game.kanjiManager.removeDeck("N5");
+                }
+            }
         );
         this._n4Button = new JLPTButton(
             "N4 Button",
@@ -63,7 +75,19 @@ export default class TitleScreenGame extends GameState {
             64,
             64,
             "/src/assets/images/n4-button-64",
-            "/src/assets/images/n4-button-selected-64"
+            "/src/assets/images/n4-button-selected-64",
+            () => {
+                if (this._n4Button.currentState.name == "default") {
+                    this._n4Button.changeState("selected");
+                    this._game.kanjiManager.addDeck("N4");
+                }
+            },
+            () => {
+                if (this._n4Button.currentState.name == "selected") {
+                    this._n4Button.changeState("default");
+                    this._game.kanjiManager.removeDeck("N4");
+                }
+            }
         );
         this._n3Button = new JLPTButton(
             "N3 Button",
@@ -73,9 +97,20 @@ export default class TitleScreenGame extends GameState {
             64,
             64,
             "/src/assets/images/n3-button-64",
-            "/src/assets/images/n3-button-selected-64"
+            "/src/assets/images/n3-button-selected-64",
+            () => {
+                if (this._n3Button.currentState.name == "default") {
+                    this._n3Button.changeState("selected");
+                    this._game.kanjiManager.addDeck("N3");
+                }
+            },
+            () => {
+                if (this._n3Button.currentState.name == "selected") {
+                    this._n3Button.changeState("default");
+                    this._game.kanjiManager.removeDeck("N3");
+                }
+            }
         );
-
         this._n2Button = new JLPTButton(
             "N2 Button",
             this,
@@ -84,7 +119,19 @@ export default class TitleScreenGame extends GameState {
             64,
             64,
             "/src/assets/images/n2-button-64",
-            "/src/assets/images/n2-button-selected-64"
+            "/src/assets/images/n2-button-selected-64",
+            () => {
+                if (this._n2Button.currentState.name == "default") {
+                    this._n2Button.changeState("selected");
+                    this._game.kanjiManager.addDeck("N2");
+                }
+            },
+            () => {
+                if (this._n2Button.currentState.name == "selected") {
+                    this._n2Button.changeState("default");
+                    this._game.kanjiManager.removeDeck("N2");
+                }
+            }
         );
         this._n1Button = new JLPTButton(
             "N1 Button",
@@ -94,7 +141,19 @@ export default class TitleScreenGame extends GameState {
             64,
             64,
             "/src/assets/images/n1-button-64",
-            "/src/assets/images/n1-button-selected-64"
+            "/src/assets/images/n1-button-selected-64",
+            () => {
+                if (this._n1Button.currentState.name == "default") {
+                    this._n1Button.changeState("selected");
+                    this._game.kanjiManager.addDeck("N1");
+                }
+            },
+            () => {
+                if (this._n1Button.currentState.name == "selected") {
+                    this._n1Button.changeState("default");
+                    this._game.kanjiManager.removeDeck("N1");
+                }
+            }
         );
         this._playButton = new PlayButton(
             "Play Button",
@@ -102,8 +161,23 @@ export default class TitleScreenGame extends GameState {
             184,
             375,
             96,
-            64
+            64,
+            null,
+            null,
+            null,
+            null,
+            (gameRef) => {
+                gameRef.changeState("main-screen");
+                gameRef.kanjiManager.buildGameDeck();
+                window.setTimeout(() => {
+                    document.getElementById("answer-input").focus();
+                }, 0);
+            }
         );
+    }
+
+    get playButton() {
+        return this._playButton;
     }
 
     async build() {
@@ -116,27 +190,11 @@ export default class TitleScreenGame extends GameState {
         await this._n2Button.build();
         await this._n1Button.build();
         await this._playButton.build();
-
-        // this._updater.addEntity(this._titleText);
-        // this._updater.addEntity(this._n5Button);
-        // this._updater.addEntity(this._n4Button);
-        // this._updater.addEntity(this._n3Button);
-        // this._updater.addEntity(this._n2Button);
-        // this._updater.addEntity(this._n1Button);
-        // this._updater.addEntity(this._playButton);
-
-        // this._animator.addEntity(this._backgroundSky);
-        // this._animator.addEntity(this._backgroundOverlay);
-        // this._animator.addEntity(this._titleText);
-        // this._animator.addEntity(this._n5Button);
-        // this._animator.addEntity(this._n4Button);
-        // this._animator.addEntity(this._n3Button);
-        // this._animator.addEntity(this._n2Button);
-        // this._animator.addEntity(this._n1Button);
-        // this._animator.addEntity(this._playButton);
     }
 
     enter() {
-        this._game.controls.changeState("title-screen", {});
+        this._game.controls.changeState("title-screen", {
+            gameState: this,
+        });
     }
 }
