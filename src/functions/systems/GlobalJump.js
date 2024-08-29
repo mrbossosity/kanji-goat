@@ -5,6 +5,7 @@ export default class GlobalJump {
         this._backgroundScrolling = false;
         this._playerJumping = true;
         this._jumpThrottler = true;
+        this._carrotPhase = false;
     }
 
     // Public
@@ -24,6 +25,14 @@ export default class GlobalJump {
         this._playerJumping = boolean;
     }
 
+    get carrotPhase() {
+        return this._carrotPhase;
+    }
+
+    set carrotPhase(boolean) {
+        this._carrotPhase = boolean;
+    }
+
     reset() {
         this._backgroundScrolling = false;
         this._playerJumping = false;
@@ -39,6 +48,11 @@ export default class GlobalJump {
         this._jumpThrottler = false;
 
         if (this._backgroundScrolling || this._playerJumping) {
+            this._jumpThrottler = true;
+            return;
+        }
+
+        if (this._carrotPhase) {
             this._jumpThrottler = true;
             return;
         }

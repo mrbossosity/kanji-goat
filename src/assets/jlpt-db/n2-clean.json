@@ -1260,13 +1260,6 @@
         "level": 2
     },
     {
-        "word": "アイデア / アイディア",
-        "meaning": "idea",
-        "furigana": "",
-        "romaji": "aidea / aidia",
-        "level": 2
-    },
-    {
         "word": "暖める",
         "meaning": "to warm, to heat",
         "furigana": "あたためる",
@@ -2471,7 +2464,14 @@
         "level": 2
     },
     {
-        "word": "作る / 造る",
+        "word": "作る",
+        "meaning": "to make, to create",
+        "furigana": "つくる",
+        "romaji": "tsukuru",
+        "level": 2
+    },
+    {
+        "word": "造る",
         "meaning": "to make, to create",
         "furigana": "つくる",
         "romaji": "tsukuru",
@@ -10574,13 +10574,6 @@
         "meaning": "less than, insufficient",
         "furigana": "みまん",
         "romaji": "miman",
-        "level": 2
-    },
-    {
-        "word": "けれど / けれども",
-        "meaning": "but, however",
-        "furigana": "",
-        "romaji": "keredo / keredomo",
         "level": 2
     },
     {

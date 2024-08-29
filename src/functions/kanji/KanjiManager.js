@@ -56,10 +56,12 @@ export default class KanjiManager {
 
     randomCard() {
         if (this._gameDeck) {
+            // Get random card from deck
             this._currentCard =
                 this._gameDeck[
                     Math.floor(Math.random() * this._gameDeck.length)
                 ];
+
             return this._currentCard;
         }
     }

@@ -5,12 +5,12 @@ export default class TitleScreenControls extends ControlState {
         super(controls);
     }
 
-    _keydownEvents(e) {
+    _keyupEvents = (e) => {
         if (e.key === "Enter") {
             this._gameState.playButton.click();
             this._controls.game.changeState("main-screen");
         }
-    }
+    };
 
     enter(params) {
         super.enter(params);

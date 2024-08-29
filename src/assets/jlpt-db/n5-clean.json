@@ -149,8 +149,8 @@
     {
         "word": "九",
         "meaning": "nine",
-        "furigana": "きゅう / く",
-        "romaji": "kyū / ku",
+        "furigana": "きゅう",
+        "romaji": "kyū",
         "level": 5
     },
     {
@@ -331,15 +331,15 @@
     {
         "word": "練習",
         "meaning": "to practice",
-        "furigana": "れんしゅうする",
-        "romaji": "renshūsuru",
+        "furigana": "れんしゅう",
+        "romaji": "renshū",
         "level": 5
     },
     {
         "word": "何",
         "meaning": "what",
-        "furigana": "なん / なに",
-        "romaji": "nan / nani",
+        "furigana": "なに",
+        "romaji": "nani",
         "level": 5
     },
     {
@@ -352,8 +352,8 @@
     {
         "word": "毎月",
         "meaning": "every month",
-        "furigana": "まいげつ / まいつき",
-        "romaji": "maigetsu / maitsuki",
+        "furigana": "まいつき",
+        "romaji": "maitsuki",
         "level": 5
     },
     {
@@ -466,13 +466,6 @@
         "meaning": "umbrella",
         "furigana": "かさ",
         "romaji": "kasa",
-        "level": 5
-    },
-    {
-        "word": "いい / よい",
-        "meaning": "good",
-        "furigana": "",
-        "romaji": "ii / yoi",
         "level": 5
     },
     {
@@ -835,7 +828,7 @@
     {
         "word": "掃除",
         "meaning": "to clean, to sweep",
-        "furigana": "そうじする",
+        "furigana": "そうじ",
         "romaji": "sōjisuru",
         "level": 5
     },
@@ -900,13 +893,6 @@
         "meaning": "word, language",
         "furigana": "ことば",
         "romaji": "kotoba",
-        "level": 5
-    },
-    {
-        "word": "キロ / キログラム",
-        "meaning": "kilogram",
-        "furigana": "",
-        "romaji": "kiro / kiroguramu",
         "level": 5
     },
     {
@@ -1050,13 +1036,6 @@
         "level": 5
     },
     {
-        "word": "ラジカセ / ラジオカセット",
-        "meaning": "radio cassette player",
-        "furigana": "",
-        "romaji": "rajikase / rajiokasetto",
-        "level": 5
-    },
-    {
         "word": "さ来年",
         "meaning": "year after next",
         "furigana": "さらいねん",
@@ -1073,8 +1052,8 @@
     {
         "word": "四",
         "meaning": "four",
-        "furigana": "し / よん",
-        "romaji": "shi / yon",
+        "furigana": "よん",
+        "romaji": "yon",
         "level": 5
     },
     {
@@ -1103,13 +1082,6 @@
         "meaning": "luke warm",
         "furigana": "ぬるい",
         "romaji": "nurui",
-        "level": 5
-    },
-    {
-        "word": "そうして / そして",
-        "meaning": "and",
-        "furigana": "",
-        "romaji": "sōshite / soshite",
         "level": 5
     },
     {
@@ -1241,8 +1213,8 @@
     {
         "word": "七",
         "meaning": "seven",
-        "furigana": "しち / なな",
-        "romaji": "shichi / nana",
+        "furigana": "なな",
+        "romaji": "nana",
         "level": 5
     },
     {
@@ -1537,13 +1509,6 @@
         "meaning": "ticket",
         "furigana": "きっぷ",
         "romaji": "kippu",
-        "level": 5
-    },
-    {
-        "word": "キロ / キロメートル",
-        "meaning": "kilometre",
-        "furigana": "",
-        "romaji": "kiro / kiromētoru",
         "level": 5
     },
     {
@@ -2093,13 +2058,6 @@
         "level": 5
     },
     {
-        "word": "じゃ / じゃあ",
-        "meaning": "well then…",
-        "furigana": "",
-        "romaji": "ja / jaa",
-        "level": 5
-    },
-    {
         "word": "本",
         "meaning": "book",
         "furigana": "ほん",
@@ -2144,8 +2102,8 @@
     {
         "word": "毎年",
         "meaning": "every year",
-        "furigana": "まいねん / まいとし",
-        "romaji": "mainen / maitoshi",
+        "furigana": "まいとし",
+        "romaji": "maitoshi",
         "level": 5
     },
     {
@@ -2338,7 +2296,14 @@
         "level": 5
     },
     {
-        "word": "川 / 河",
+        "word": "川",
+        "meaning": "river",
+        "furigana": "かわ",
+        "romaji": "kawa",
+        "level": 5
+    },
+    {
+        "word": "河",
         "meaning": "river",
         "furigana": "かわ",
         "romaji": "kawa",
@@ -2403,7 +2368,7 @@
     {
         "word": "散歩",
         "meaning": "to stroll",
-        "furigana": "さんぽする",
+        "furigana": "さんぽ",
         "romaji": "sanposuru",
         "level": 5
     },
@@ -2858,7 +2823,7 @@
     {
         "word": "勉強",
         "meaning": "to study",
-        "furigana": "べんきょうする",
+        "furigana": "べんきょう",
         "romaji": "benkyōsuru",
         "level": 5
     },
@@ -3045,7 +3010,14 @@
         "level": 5
     },
     {
-        "word": "伯父 / 叔父",
+        "word": "伯父",
+        "meaning": "grandfather, male senior citizen",
+        "furigana": "おじいさん",
+        "romaji": "ojiisan",
+        "level": 5
+    },
+    {
+        "word": "叔父",
         "meaning": "grandfather, male senior citizen",
         "furigana": "おじいさん",
         "romaji": "ojiisan",
@@ -3234,7 +3206,14 @@
         "level": 5
     },
     {
-        "word": "丸い / 円い",
+        "word": "丸い",
+        "meaning": "round, circular",
+        "furigana": "まるい",
+        "romaji": "marui",
+        "level": 5
+    },
+    {
+        "word": "円い",
         "meaning": "round, circular",
         "furigana": "まるい",
         "romaji": "marui",
@@ -3283,7 +3262,14 @@
         "level": 5
     },
     {
-        "word": "伯母さん / 叔母さん",
+        "word": "伯母さん",
+        "meaning": "aunt",
+        "furigana": "おばさん",
+        "romaji": "obasan",
+        "level": 5
+    },
+    {
+        "word": "叔母さん",
         "meaning": "aunt",
         "furigana": "おばさん",
         "romaji": "obasan",
@@ -3535,7 +3521,14 @@
         "level": 5
     },
     {
-        "word": "初め / 始め",
+        "word": "初め",
+        "meaning": "beginning",
+        "furigana": "はじめ",
+        "romaji": "hajime",
+        "level": 5
+    },
+    {
+        "word": "始め",
         "meaning": "beginning",
         "furigana": "はじめ",
         "romaji": "hajime",

@@ -10,6 +10,6 @@
 </head>
 <body>
     <canvas id="game-canvas" width="512" height="512"></canvas>
-    <input autofocus tabindex="1" type="text" name="answer-input" id="answer-input" onfocus="this.value=''" onblur="this.focus();">
+    <input autofocus tabindex="1" type="text" name="answer-input" id="answer-input" autocomplete="off" readonly onfocus="this.removeAttribute('readonly'); this.value=''" onblur="this.focus();">
 </body>
 </html>

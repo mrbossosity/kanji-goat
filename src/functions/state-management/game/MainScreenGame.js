@@ -158,6 +158,31 @@ export default class MainScreenGame extends GameState {
         this._answerText.canRender = false;
     }
 
+    // Private
+    _pointsByJLPTLevel(card) {
+        let level = card.level;
+        if (level == 5) {
+            console.log("100");
+            return 100;
+        }
+        if (level == 4) {
+            console.log("200");
+            return 200;
+        }
+        if (level == 3) {
+            console.log("300");
+            return 300;
+        }
+        if (level == 2) {
+            console.log("400");
+            return 400;
+        }
+        if (level == 1) {
+            console.log("500");
+            return 500;
+        }
+    }
+
     // Public
     get player() {
         return this._player;
@@ -194,24 +219,34 @@ export default class MainScreenGame extends GameState {
         this._game.kanjiManager.input.value = "";
         this._answerText.text = "";
         this._controlState.carrotPhase = true;
+        this._globalJump.carrotPhase = true;
     }
 
     checkAnswer() {
+        if (!this._game.kanjiManager.hiraganizedAnswer) return;
         const userAnswer = this._game.kanjiManager.hiraganizedAnswer.trim();
-        if (userAnswer == this._game.kanjiManager.currentCard.furigana) {
+        const currentCard = this._game.kanjiManager.currentCard;
+        if (userAnswer == currentCard.furigana) {
+            let points = this._pointsByJLPTLevel(currentCard);
+            this._scoreText.addPoints(points);
             this._bigCarrot.changeState("shrinking");
             this._carrotText.canRender = false;
             this._answerText.canRender = false;
             this._controlState.carrotPhase = false;
-        } else {
+            this._globalJump.carrotPhase = false;
         }
     }
 
     resetGame() {
         const currentCard = this._game.kanjiManager.currentCard;
-        alert(
-            `Game Over! The correct reading of ${currentCard.word} is ${currentCard.furigana}, which means "${currentCard.meaning}"`
-        );
+        if (currentCard) {
+            alert(
+                `Game Over! The correct reading of ${currentCard.word} is ${currentCard.furigana}, which means "${currentCard.meaning}"`
+            );
+        } else {
+            alert(`Game Over!`);
+        }
+
         this._player.reset();
         this._backgroundCliff.reset();
         this._cliff1.init();
@@ -219,8 +254,14 @@ export default class MainScreenGame extends GameState {
         this._scoreText.reset();
         this._globalJump.reset();
         this._bigCarrot.reset();
+        this._carrotText.canRender = false;
+        this._answerText.canRender = false;
         this._controlState.carrotPhase = false;
+        this._controlState.spacebarDown = false;
+        this._globalJump.carrotPhase = false;
         this._game.kanjiManager.input.value = "";
+
+        this._game.changeState("title-screen");
     }
 
     async build() {

@@ -9,7 +9,7 @@
     {
         "word": "故障",
         "meaning": "to break-down",
-        "furigana": "こしょう・する",
+        "furigana": "こしょう",
         "romaji": "koshō-suru",
         "level": 4
     },
@@ -329,9 +329,9 @@
         "level": 4
     },
     {
-        "word": "お・金持ち",
+        "word": "金持ち",
         "meaning": "rich man",
-        "furigana": "かねもち / おかねもち",
+        "furigana": "かねもち",
         "romaji": "kanemochi / okanemochi",
         "level": 4
     },
@@ -366,7 +366,7 @@
     {
         "word": "世話",
         "meaning": "to look after",
-        "furigana": "せわ・する",
+        "furigana": "せわ",
         "romaji": "sewa-suru",
         "level": 4
     },
@@ -443,7 +443,7 @@
     {
         "word": "食事",
         "meaning": "to have a meal",
-        "furigana": "しょくじ・する",
+        "furigana": "しょくじ",
         "romaji": "shokuji-suru",
         "level": 4
     },
@@ -800,7 +800,7 @@
     {
         "word": "出席",
         "meaning": "to attend",
-        "furigana": "しゅっせき・する",
+        "furigana": "しゅっせき",
         "romaji": "shusseki-suru",
         "level": 4
     },
@@ -821,7 +821,7 @@
     {
         "word": "生産",
         "meaning": "to produce",
-        "furigana": "せいさん・する",
+        "furigana": "せいさん",
         "romaji": "seisan-suru",
         "level": 4
     },
@@ -898,7 +898,7 @@
     {
         "word": "運動",
         "meaning": "to exercise",
-        "furigana": "うんどう・する",
+        "furigana": "うんどう",
         "romaji": "undō-suru",
         "level": 4
     },
@@ -975,7 +975,7 @@
     {
         "word": "輸入",
         "meaning": "to import",
-        "furigana": "ゆにゅう・する",
+        "furigana": "ゆにゅう",
         "romaji": "yunyū-suru",
         "level": 4
     },
@@ -1185,7 +1185,7 @@
     {
         "word": "運転",
         "meaning": "to drive",
-        "furigana": "うんてん・する",
+        "furigana": "うんてん",
         "romaji": "unten-suru",
         "level": 4
     },
@@ -1283,7 +1283,7 @@
     {
         "word": "入院",
         "meaning": "to hospitalise",
-        "furigana": "にゅういん・する",
+        "furigana": "にゅういん",
         "romaji": "nyūin-suru",
         "level": 4
     },
@@ -1498,13 +1498,6 @@
         "level": 4
     },
     {
-        "word": "コンピュータ / コンピューター",
-        "meaning": "computer",
-        "furigana": "",
-        "romaji": "konpyūta / konpyūtā",
-        "level": 4
-    },
-    {
         "word": "盛ん",
         "meaning": "popularity, prosperous",
         "furigana": "さかん",
@@ -1521,7 +1514,7 @@
     {
         "word": "支度",
         "meaning": "to prepare",
-        "furigana": "したく・する",
+        "furigana": "したく",
         "romaji": "shitaku-suru",
         "level": 4
     },
@@ -1549,7 +1542,7 @@
     {
         "word": "遠慮",
         "meaning": "to be reserved, to be restrained",
-        "furigana": "えんりょ・する",
+        "furigana": "えんりょ",
         "romaji": "enryo-suru",
         "level": 4
     },
@@ -1570,7 +1563,7 @@
     {
         "word": "招待",
         "meaning": "to invite",
-        "furigana": "しょうたい・する",
+        "furigana": "しょうたい",
         "romaji": "shōtai-suru",
         "level": 4
     },
@@ -1759,7 +1752,7 @@
     {
         "word": "相談",
         "meaning": "to discuss",
-        "furigana": "そうだん・する",
+        "furigana": "そうだん",
         "romaji": "sōdan-suru",
         "level": 4
     },
@@ -1780,7 +1773,7 @@
     {
         "word": "経験",
         "meaning": "to experience",
-        "furigana": "けいけん・する",
+        "furigana": "けいけん",
         "romaji": "keiken-suru",
         "level": 4
     },
@@ -1857,7 +1850,7 @@
     {
         "word": "案内",
         "meaning": "to guide",
-        "furigana": "あんない・する",
+        "furigana": "あんない",
         "romaji": "annai-suru",
         "level": 4
     },
@@ -1915,13 +1908,6 @@
         "meaning": "traffic, transportation",
         "furigana": "こうつう",
         "romaji": "kōtsū",
-        "level": 4
-    },
-    {
-        "word": "やはり / やっぱり",
-        "meaning": "as I thought, absolutely",
-        "furigana": "",
-        "romaji": "yahari / yappari",
         "level": 4
     },
     {
@@ -2095,7 +2081,7 @@
     {
         "word": "計画",
         "meaning": "to plan",
-        "furigana": "けいかく・する",
+        "furigana": "けいかく",
         "romaji": "keikaku-suru",
         "level": 4
     },
@@ -2298,7 +2284,7 @@
     {
         "word": "承知",
         "meaning": "to consent",
-        "furigana": "しょうち・する",
+        "furigana": "しょうち",
         "romaji": "shōchi-suru",
         "level": 4
     },
@@ -2585,7 +2571,7 @@
     {
         "word": "出発",
         "meaning": "to depart",
-        "furigana": "しゅっぱつ・する",
+        "furigana": "しゅっぱつ",
         "romaji": "shuppatsu-suru",
         "level": 4
     },
@@ -2725,7 +2711,7 @@
     {
         "word": "拝見",
         "meaning": "(humble) to look at",
-        "furigana": "はいけん・する",
+        "furigana": "はいけん",
         "romaji": "haiken-suru",
         "level": 4
     },
@@ -2872,7 +2858,7 @@
     {
         "word": "輸出",
         "meaning": "to export",
-        "furigana": "ゆしゅつ・する",
+        "furigana": "ゆしゅつ",
         "romaji": "yushutsu-suru",
         "level": 4
     },
@@ -2881,13 +2867,6 @@
         "meaning": "culture",
         "furigana": "ぶんか",
         "romaji": "bunka",
-        "level": 4
-    },
-    {
-        "word": "けれど / けれども",
-        "meaning": "however",
-        "furigana": "",
-        "romaji": "keredo / keredomo",
         "level": 4
     },
     {
@@ -2900,7 +2879,7 @@
     {
         "word": "準備",
         "meaning": "to prepare",
-        "furigana": "じゅんび・する",
+        "furigana": "じゅんび",
         "romaji": "junbi-suru",
         "level": 4
     },
@@ -2933,7 +2912,21 @@
         "level": 4
     },
     {
-        "word": "堅 / 硬/固い",
+        "word": "堅",
+        "meaning": "hard",
+        "furigana": "かたい",
+        "romaji": "katai",
+        "level": 4
+    },
+    {
+        "word": "硬い",
+        "meaning": "hard",
+        "furigana": "かたい",
+        "romaji": "katai",
+        "level": 4
+    },
+    {
+        "word": "固い",
         "meaning": "hard",
         "furigana": "かたい",
         "romaji": "katai",
@@ -3061,21 +3054,14 @@
     {
         "word": "放送",
         "meaning": "to broadcast",
-        "furigana": "ほうそう・する",
+        "furigana": "ほうそう",
         "romaji": "hōsō-suru",
-        "level": 4
-    },
-    {
-        "word": "レポート / リポート",
-        "meaning": "report",
-        "furigana": "",
-        "romaji": "repōto / ripōto",
         "level": 4
     },
     {
         "word": "心配",
         "meaning": "to worry",
-        "furigana": "しんぱい・する",
+        "furigana": "しんぱい",
         "romaji": "shinpai-suru",
         "level": 4
     },
@@ -3117,14 +3103,14 @@
     {
         "word": "生活",
         "meaning": "to live",
-        "furigana": "せいかつ・する",
+        "furigana": "せいかつ",
         "romaji": "seikatsu-suru",
         "level": 4
     },
     {
         "word": "退院",
         "meaning": "to leave hospital",
-        "furigana": "たいいん・する",
+        "furigana": "たいいん",
         "romaji": "taiin-suru",
         "level": 4
     },
@@ -3138,7 +3124,7 @@
     {
         "word": "入学",
         "meaning": "to enter school or university",
-        "furigana": "にゅうがく・する",
+        "furigana": "にゅうがく",
         "romaji": "nyūgaku-suru",
         "level": 4
     },

@@ -4,18 +4,18 @@ export class ControlState {
         this._gameState;
     }
 
-    _keydownEvents(e) {}
-    _keyupEvents(e) {}
+    _keydownEvents = (e) => {};
+    _keyupEvents = (e) => {};
 
     enter(params) {
         this._gameState = params.gameState;
         this._gameState.controlState = this;
-        document.addEventListener("keydown", (e) => this._keydownEvents(e));
-        document.addEventListener("keyup", (e) => this._keyupEvents(e));
+        document.addEventListener("keydown", this._keydownEvents);
+        document.addEventListener("keyup", this._keyupEvents);
     }
     update() {}
     exit() {
-        document.removeEventListener("keydown", (e) => this._keydownEvents);
-        document.removeEventListener("keyup", (e) => this._keyupEvents);
+        document.removeEventListener("keydown", this._keydownEvents);
+        document.removeEventListener("keyup", this._keyupEvents);
     }
 }

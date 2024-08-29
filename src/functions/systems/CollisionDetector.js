@@ -19,7 +19,6 @@ export default class CollisionDetector {
         if (obj == this._player.gluedObj) return;
         if (obj.name == "Carrot") {
             obj.carrotCollision();
-            this._gameState.scoreText.addPoints(100);
         } else {
             this._player.land(obj);
             obj.registerLanding();
