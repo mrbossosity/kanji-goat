@@ -52,6 +52,9 @@ export default class MainScreenControls extends ControlState {
             this._gameState.game.kanjiManager.hiraganizedAnswer =
                 hiraganizedAnswer;
             this._gameState.answerText.text = hiraganizedAnswer;
+            if (e.key === "Enter") {
+                this._gameState.checkAnswer();
+            }
         }
 
         if (e.key === "ArrowLeft") {
@@ -60,9 +63,6 @@ export default class MainScreenControls extends ControlState {
             this._gameState.player.movingRight = false;
         } else if (e.key === " ") {
             this._spacebarDown = false;
-        } else if (e.key === "Enter") {
-            console.log("checking answer");
-            this._gameState.checkAnswer();
         }
     };
 

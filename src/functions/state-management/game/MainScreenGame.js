@@ -156,9 +156,27 @@ export default class MainScreenGame extends GameState {
             3
         );
         this._answerText.canRender = false;
+
+        this._sfx = {};
     }
 
     // Private
+    _resetVariables() {
+        this._player.reset();
+        this._backgroundCliff.reset();
+        this._cliff1.init();
+        this._cliff2.initAlt();
+        this._scoreText.reset();
+        this._globalJump.reset();
+        this._bigCarrot.reset();
+        this._carrotText.canRender = false;
+        this._answerText.canRender = false;
+        this._controlState.carrotPhase = false;
+        this._controlState.spacebarDown = false;
+        this._globalJump.carrotPhase = false;
+        this._game.kanjiManager.input.value = "";
+    }
+
     _pointsByJLPTLevel(card) {
         let level = card.level;
         if (level == 5) {
@@ -227,6 +245,7 @@ export default class MainScreenGame extends GameState {
         const userAnswer = this._game.kanjiManager.hiraganizedAnswer.trim();
         const currentCard = this._game.kanjiManager.currentCard;
         if (userAnswer == currentCard.furigana) {
+            this._sfx.correctSfx.play();
             let points = this._pointsByJLPTLevel(currentCard);
             this._scoreText.addPoints(points);
             this._bigCarrot.changeState("shrinking");
@@ -234,10 +253,12 @@ export default class MainScreenGame extends GameState {
             this._answerText.canRender = false;
             this._controlState.carrotPhase = false;
             this._globalJump.carrotPhase = false;
+        } else {
+            this._sfx.wrongSfx.play();
         }
     }
 
-    resetGame() {
+    gameOver() {
         const currentCard = this._game.kanjiManager.currentCard;
         if (currentCard) {
             alert(
@@ -247,20 +268,7 @@ export default class MainScreenGame extends GameState {
             alert(`Game Over!`);
         }
 
-        this._player.reset();
-        this._backgroundCliff.reset();
-        this._cliff1.init();
-        this._cliff2.initAlt();
-        this._scoreText.reset();
-        this._globalJump.reset();
-        this._bigCarrot.reset();
-        this._carrotText.canRender = false;
-        this._answerText.canRender = false;
-        this._controlState.carrotPhase = false;
-        this._controlState.spacebarDown = false;
-        this._globalJump.carrotPhase = false;
-        this._game.kanjiManager.input.value = "";
-
+        this._resetVariables();
         this._game.changeState("title-screen");
     }
 
@@ -280,12 +288,18 @@ export default class MainScreenGame extends GameState {
         await this._carrotText.build();
         await this._answerText.build();
         await this._scoreText.build();
+
+        const correctSfx = new Audio("/src/assets/audio/correct-answer.wav");
+        this._sfx.correctSfx = correctSfx;
+        const wrongSfx = new Audio("/src/assets/audio/wrong-answer.wav");
+        this._sfx.wrongSfx = wrongSfx;
     }
 
     enter() {
         this._game.controls.changeState("main-screen", {
             gameState: this,
         });
+        this._resetVariables();
     }
 
     exit() {}

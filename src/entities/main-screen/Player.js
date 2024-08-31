@@ -36,6 +36,9 @@ export default class Player extends Sprite {
         globalJump.addEntity(this);
         gravityEnvironment.addEntity(this);
         collisionDetector.player = this;
+
+        // SFX
+        this._sfx = {};
     }
 
     _updateMovementX() {
@@ -63,7 +66,7 @@ export default class Player extends Sprite {
 
     _checkLose() {
         if (this._y > CANVAS_HEIGHT) {
-            this._gameState.resetGame();
+            this._gameState.gameOver();
         }
     }
 
@@ -128,6 +131,10 @@ export default class Player extends Sprite {
         this._movingRight = value;
     }
 
+    get sfx() {
+        return this._sfx;
+    }
+
     async build() {
         super.build();
 
@@ -143,9 +150,15 @@ export default class Player extends Sprite {
         await idleState.build();
         this._stateMachine.addState("idle", idleState);
         this.changeState("idle");
+
+        const landSfx = new Audio("/src/assets/audio/goat-landing.wav");
+        this._sfx.landSfx = landSfx;
+        const jumpSfx = new Audio("/src/assets/audio/goat-jump.wav");
+        this._sfx.jumpSfx = jumpSfx;
     }
 
     jump() {
+        this._sfx.jumpSfx.play();
         this._glued = false;
         this._gluedObj = null;
         this._speedY = this._jumpSpeed;
@@ -163,6 +176,7 @@ export default class Player extends Sprite {
         if (this._glued) {
             return;
         }
+        this._sfx.landSfx.play();
         this._speedY = 0;
         this._isFreeFalling = false;
         this._isJumping = false;
